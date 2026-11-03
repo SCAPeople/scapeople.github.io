@@ -193,10 +193,12 @@
     /* ---------- 04 process (pinned, 4 steps) */
     .process { height: 560vh; }
     .process .frame { display: flex; flex-direction: column; }
-    .process .top { text-align: center; padding-top: 112px; }
+    .process .top { text-align: center; padding-top: 112px; flex: none; }
     .process .top h2 { margin-top: 22px; }
     .process .top p { max-width: 60ch; margin: 18px auto 0; }
-    .stepcard { position: absolute; left: max(40px, calc((100vw - 1240px) / 2 + 40px)); bottom: 72px; width: min(440px, calc(100vw - 80px)); overflow: hidden; }
+    .stepcard { position: relative; flex: none; margin: clamp(20px, 4vh, 44px) 0 0 max(40px, calc((100vw - 1240px) / 2 + 40px)); width: min(440px, calc(100vw - 80px)); overflow: hidden; }
+    @media (max-height: 860px) { .stepcard .photo { display: none; } }
+    @media (max-height: 700px) { .process .top p { display: none; } .process .top { padding-top: 92px; } }
     .stepcard .photo { height: 150px; }
     .stepcard .pills { display: flex; gap: 6px; padding: 20px 26px 0; }
     .stepcard .pills span { font-family: var(--mono); font-size: 11px; padding: 4px 8px; border: 1px solid rgba(255,255,255,.2); color: var(--muted); transition: all .3s; }
@@ -338,7 +340,7 @@
       .seq article { inset: 24px; }
       .segs { padding: 0 24px 22px; }
       .problem h2 { font-size: 32px; }
-      .stepcard { left: 20px; width: calc(100vw - 40px); bottom: 24px; }
+      .stepcard { margin-left: 20px; width: calc(100vw - 40px); }
       .stepcard .photo { display: none; }
       .process .top { padding-top: 96px; }
       .process .top p { display: none; }
@@ -912,7 +914,7 @@ const F = {
 
 // ---------- camera + world keyframes, one (or more) per chapter
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
-function camForStep(i) { const P = path(STEP_U[i]); return { pos: V(P.x + (mobile() ? 0 : 3), 7.5, P.z + 10), tgt: V(P.x + (mobile() ? 0 : 3.5), 0, P.z - 1.5) }; }
+function camForStep(i) { const P = path(STEP_U[i]); return { pos: V(P.x + (mobile() ? 0 : 3), 7.5, P.z + 10), tgt: V(P.x + (mobile() ? 0 : 3.5), mobile() ? 0 : 2.6, P.z - 1.5) }; }
 const KF = {
   hero:    () => ({ pos: V(0, 4.2, 15), tgt: V(1, 3.4, 0), f: 'cluster', bg: DARK }),
   about:   () => ({ pos: V(0, 3.6, 17), tgt: V(0, 3.6, 0), f: 'ring', bg: DARK }),
