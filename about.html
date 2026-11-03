@@ -57,7 +57,10 @@
     .person { overflow: hidden; display: flex; flex-direction: column; transition: border-color .35s, transform .5s var(--ease); }
     .person:hover { border-color: rgba(255,184,28,.5); transform: translateY(-4px); }
     .shot { position: relative; aspect-ratio: 4 / 5; background: linear-gradient(160deg, #0E3470, #041E42 60%, #2A2410); display: grid; place-items: center; overflow: hidden; }
-    .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); }
+    .shot:has(img)::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(2,15,36,.55)); }
+    .stealth .ph { filter: blur(.3px); }
+    .stealth::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 10px, transparent 10px 20px); }
     .shot .ph { width: 64px; height: 64px; border-radius: 12px; background: linear-gradient(150deg, #3D6BB0, #0C2A5A); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 6px 0 #08214A; display: grid; place-items: center; }
     .shot .ph svg { width: 28px; stroke: #fff; fill: none; stroke-width: 1.7; stroke-linecap: round; }
     .shot small { position: absolute; bottom: 16px; left: 18px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--muted); }
@@ -123,18 +126,17 @@
     <div class="wrap">
       <div class="tag rv"><b>01</b><span>The partners</span></div>
       <div class="grid3">
-        <!-- Partner cards: drop a headshot into .shot as <img src="..."> and replace the name, focus line and bio. -->
         <article class="person panel rv">
-          <div class="shot"><div class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></div><small>HEADSHOT COMING SOON</small></div>
-          <div class="txt"><div class="role">Partner</div><h3>Partner name</h3><p>Bio coming soon.</p></div>
+          <div class="shot"><img src="img/Facetune_02-03-2023-15-50-46.jpg" alt="Jasmine Salinas" style="object-position:50% 20%"></div>
+          <div class="txt"><div class="role">Partner</div><h3>Jasmine Salinas</h3><p>Jasmine has over 10 years of experience in Talent &amp; HR working across multiple industries. A California native, she is passionate about a great candidate experience and finding people who will love where they work.</p></div>
         </article>
         <article class="person panel rv d1">
-          <div class="shot"><div class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></div><small>HEADSHOT COMING SOON</small></div>
-          <div class="txt"><div class="role">Partner</div><h3>Partner name</h3><p>Bio coming soon.</p></div>
+          <div class="shot stealth"><div class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></div><small>JOINING PUBLICLY SOON</small></div>
+          <div class="txt"><div class="role">Partner</div><h3>Stealth partner</h3><p>This partner has almost a decade of experience in FAANG recruiting, and will be introduced once SCA People is fully operational.</p></div>
         </article>
         <article class="person panel rv d2">
-          <div class="shot"><div class="ph"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></div><small>HEADSHOT COMING SOON</small></div>
-          <div class="txt"><div class="role">Partner</div><h3>Partner name</h3><p>Bio coming soon.</p></div>
+          <div class="shot"><img src="img/1516500886662%2012.25.15%20PM.jpg" alt="Peter Ambrosetti" style="object-position:50% 30%"></div>
+          <div class="txt"><div class="role">Partner</div><h3>Peter Ambrosetti</h3><p>Peter has more than 15 years of experience across Talent &amp; People Operations in three countries. He has been the founding people operator for a venture fund and its portfolio companies, and has scaled more than a dozen companies using the SCA People methodology.</p></div>
         </article>
       </div>
     </div>
