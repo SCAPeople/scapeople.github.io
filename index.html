@@ -8,395 +8,743 @@
   <meta property="og:title" content="SCA People">
   <meta property="og:description" content="We build your people function, then hand it over.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&h=630&q=75">
+  <meta name="theme-color" content="#041E42">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { margin: 0; font-family: Archivo, system-ui, sans-serif; color: #041E42; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
-    * { box-sizing: border-box; }
-    a { color: #041E42; }
-    a:hover { color: #8C6000; }
-    h1, h2, h3 { font-family: Literata, Georgia, serif; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
-    p { margin: 0; }
-    ul { margin: 0; padding: 0; list-style: none; }
-    .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding-inline: 32px; }
-    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8C6000; margin-bottom: 20px; }
-    .lede { font-size: 18px; line-height: 1.65; color: #4A5468; }
-    .btn { display: inline-block; padding: 15px 28px; border-radius: 6px; font-size: 16px; font-weight: 600; text-decoration: none; }
-    .btn-solid { background: #FFB81C; color: #041E42; }
-    .btn-solid:hover { background: #E8A200; color: #041E42; }
-    .btn-ghost { border: 1.5px solid #C3CCDE; color: #041E42; }
-    .btn-ghost:hover { border-color: #041E42; color: #041E42; }
-    .rule { width: 52px; height: 4px; background: #FFB81C; border-radius: 2px; }
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    html { scroll-behavior: smooth; }
-    @media (max-width: 960px) {
-      [style*="repeat(4, minmax(0, 1fr))"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-      [style*="repeat(3, minmax(0, 1fr))"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  <style>
+    :root {
+      --navy: #041E42;
+      --navy-deep: #020F24;
+      --navy-mid: #0A2A5C;
+      --navy-line: #1C3557;
+      --gold: #FFB81C;
+      --gold-dark: #E8A200;
+      --gold-text: #8C6000;
+      --ice: #F2F6FC;
+      --slate: #4A5468;
+      --mist: #C9D3E6;
+      --muted: #9FAEC9;
+      --white: #FFFFFF;
+      --sans: "Inter Tight", system-ui, -apple-system, Segoe UI, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+      --ease: cubic-bezier(.2, .7, .1, 1);
     }
-    @media (max-width: 640px) {
-      .wrap { padding-inline: 16px; }
-      [style*="repeat(4, minmax(0, 1fr))"], [style*="repeat(3, minmax(0, 1fr))"], [style*="repeat(2, minmax(0, 1fr))"] { grid-template-columns: 1fr !important; }
-      h1 { font-size: 40px !important; }
-      h2 { font-size: 30px !important; }
-      section { padding-block: 64px !important; }
-      header nav { display: none !important; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--sans); color: var(--white); background: var(--navy-deep); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    h1, h2, h3, p { margin: 0; }
+    ul, ol { margin: 0; padding: 0; list-style: none; }
+    img { display: block; max-width: 100%; }
+    .wrap { width: 100%; max-width: 1240px; margin: 0 auto; padding-inline: 40px; }
+
+    /* ---------- shared bits */
+    .tag { display: inline-flex; align-items: stretch; font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; }
+    .tag b { background: var(--gold); color: var(--navy); padding: 6px 9px; font-weight: 500; }
+    .tag span { border: 1px solid rgba(255,255,255,.22); border-left: 0; padding: 5px 11px; color: var(--mist); }
+    .light .tag span, .ice .tag span { border-color: #C3CCDE; color: var(--slate); }
+    .h-xl { font-size: clamp(42px, 6.6vw, 96px); line-height: .98; font-weight: 400; letter-spacing: -0.035em; }
+    .h-lg { font-size: clamp(34px, 4.6vw, 64px); line-height: 1.04; font-weight: 400; letter-spacing: -0.03em; }
+    .h-md { font-size: clamp(28px, 3.2vw, 44px); line-height: 1.1; font-weight: 400; letter-spacing: -0.025em; }
+    .lede { font-size: clamp(17px, 1.4vw, 19px); line-height: 1.65; color: var(--mist); }
+    .light .lede, .ice .lede { color: var(--slate); }
+    .gold { color: var(--gold); }
+    .btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 26px; font-size: 16px; font-weight: 500; text-decoration: none; transition: background .25s, color .25s, border-color .25s, transform .25s var(--ease); }
+    .btn svg { transition: transform .3s var(--ease); }
+    .btn:hover svg { transform: translateX(4px); }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--white); }
+    .btn-line { border: 1px solid rgba(255,255,255,.4); color: var(--white); }
+    .btn-line:hover { border-color: var(--gold); color: var(--gold); }
+    .light .btn-line { border-color: #C3CCDE; color: var(--navy); }
+    .light .btn-line:hover { border-color: var(--navy); }
+    section { position: relative; }
+    .light { background: var(--white); color: var(--navy); }
+    .ice { background: var(--ice); color: var(--navy); }
+
+    /* ---------- reveal on scroll */
+    .rv { opacity: 0; transform: translateY(28px); filter: blur(6px); transition: opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease); }
+    .rv.in { opacity: 1; transform: none; filter: none; }
+    .rv.d1 { transition-delay: .08s; } .rv.d2 { transition-delay: .16s; } .rv.d3 { transition-delay: .24s; } .rv.d4 { transition-delay: .32s; } .rv.d5 { transition-delay: .4s; }
+
+    /* ---------- nav */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .35s, backdrop-filter .35s, border-color .35s; border-bottom: 1px solid transparent; }
+    .nav.solid { background: rgba(2, 15, 36, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-color: rgba(255,255,255,.08); }
+    .nav .wrap { display: flex; align-items: center; gap: 36px; height: 76px; }
+    .logo { white-space: nowrap; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: .04em; text-decoration: none; text-transform: uppercase; }
+    .logo i { width: 22px; height: 22px; background: var(--gold); display: grid; place-items: center; }
+    .logo i::after { content: ""; width: 8px; height: 8px; background: var(--navy); }
+    .nav nav { display: flex; gap: 30px; margin-left: auto; }
+    .nav nav a { display: flex; align-items: center; gap: 9px; text-decoration: none; font-size: 15px; color: var(--mist); transition: color .2s; }
+    .nav nav a::after { content: "+"; width: 15px; height: 15px; border: 1px solid rgba(255,255,255,.35); display: grid; place-items: center; font-size: 11px; line-height: 1; transition: transform .3s var(--ease), border-color .2s; }
+    .nav nav a:hover { color: var(--white); }
+    .nav nav a:hover::after { transform: rotate(90deg); border-color: var(--gold); color: var(--gold); }
+    .nav .btn { padding: 11px 18px; font-size: 14.5px; }
+
+    /* ---------- chapter indicator */
+    .chapter { position: fixed; left: 28px; bottom: 26px; z-index: 40; display: flex; font-family: var(--mono); pointer-events: none; }
+    .chapter .num { width: 46px; background: var(--gold); color: var(--navy); display: grid; place-items: center; font-size: 13px; }
+    .chapter .lbl { background: rgba(2,15,36,.88); border: 1px solid rgba(255,255,255,.14); padding: 7px 13px; min-width: 112px; }
+    .chapter .lbl small { display: block; font-size: 9.5px; letter-spacing: .14em; color: var(--muted); }
+    .chapter .lbl span { display: block; font-size: 12.5px; letter-spacing: .1em; color: var(--white); text-transform: uppercase; margin-top: 2px; }
+    .chapter .num span, .chapter .lbl span { transition: opacity .25s; }
+    .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--gold); width: 0; z-index: 60; }
+
+    /* ---------- hero */
+    .hero { min-height: 100vh; min-height: 100svh; overflow: hidden; background: radial-gradient(120% 90% at 85% 15%, #0B3470 0%, var(--navy) 38%, var(--navy-deep) 78%); display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 72px; padding-top: 130px; }
+    .glow { position: absolute; width: 900px; height: 900px; right: -260px; top: -320px; background: radial-gradient(circle, rgba(255,184,28,.42) 0%, rgba(255,184,28,.12) 35%, transparent 65%); filter: blur(30px); pointer-events: none; animation: breathe 9s ease-in-out infinite; }
+    @keyframes breathe { 50% { transform: scale(1.12) translate(-30px, 20px); opacity: .8; } }
+    .stage { position: absolute; inset: 0; perspective: 900px; perspective-origin: 50% 20%; pointer-events: none; }
+    .floor { position: absolute; left: -50%; right: -50%; top: 42%; height: 140%; transform: rotateX(68deg); transform-origin: 50% 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M0 .5H120M.5 0V120' stroke='%23ffffff' stroke-opacity='.13'/%3E%3Cpath d='M0 -7V7M-7 0H7' transform='translate(.5 .5)' stroke='%23ffffff' stroke-opacity='.55' stroke-width='1.6'/%3E%3C/svg%3E");
+      background-size: 120px 120px; animation: travel 6s linear infinite;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 60%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 60%, transparent 100%); }
+    @keyframes travel { to { background-position: 0 120px; } }
+    .stars { position: absolute; inset: 0; background-image: radial-gradient(1.2px 1.2px at 12% 18%, rgba(255,255,255,.7), transparent), radial-gradient(1px 1px at 32% 8%, rgba(255,255,255,.5), transparent), radial-gradient(1.4px 1.4px at 58% 26%, rgba(255,255,255,.6), transparent), radial-gradient(1px 1px at 76% 12%, rgba(255,255,255,.5), transparent), radial-gradient(1.2px 1.2px at 88% 34%, rgba(255,255,255,.4), transparent), radial-gradient(1px 1px at 22% 38%, rgba(255,255,255,.4), transparent), radial-gradient(1px 1px at 46% 44%, rgba(255,255,255,.3), transparent); }
+
+    .tiles { position: absolute; inset: 0; pointer-events: none; }
+    .tile { position: absolute; width: var(--s, 96px); height: var(--s, 96px); left: var(--x); top: var(--y); border-radius: 14%;
+      background: linear-gradient(150deg, #3D6BB0 0%, #1A4384 48%, #0C2A5A 100%);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,.45), inset 0 -10px 22px rgba(2,15,36,.35), 0 calc(var(--s,96px) * .09) 0 #08214A, 0 calc(var(--s,96px) * .32) calc(var(--s,96px) * .4) rgba(0,0,0,.45);
+      display: grid; place-items: center; transform: rotate(var(--r, 0deg)); animation: float var(--t, 7s) ease-in-out infinite; animation-delay: var(--dl, 0s); will-change: transform; }
+    .tile.g { background: linear-gradient(150deg, #FFD87A 0%, #FFB81C 48%, #D99400 100%); box-shadow: inset 0 1.5px 0 rgba(255,255,255,.7), inset 0 -10px 22px rgba(140,96,0,.35), 0 calc(var(--s,96px) * .09) 0 #A87000, 0 calc(var(--s,96px) * .32) calc(var(--s,96px) * .4) rgba(0,0,0,.45); }
+    .tile svg { width: 42%; height: 42%; stroke: #fff; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
+    .tile.g svg { stroke: var(--navy); filter: none; }
+    .tile.blur { filter: blur(3px); opacity: .7; }
+    @keyframes float { 0%,100% { transform: translate3d(0,0,0) rotate(var(--r,0deg)); } 50% { transform: translate3d(0,-18px,0) rotate(calc(var(--r,0deg) + 4deg)); } }
+    .parallax { position: absolute; inset: 0; transition: transform .6s var(--ease); }
+
+    .hero-copy { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; }
+    .hero .kicker { font-size: 17px; color: var(--mist); margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
+    .hero .kicker::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
+    .hero h1 { max-width: 12ch; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero-side p { color: var(--mist); font-size: 17px; line-height: 1.65; max-width: 46ch; }
+    .hero-side .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .hero-side .fine { margin-top: 22px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    .stats { position: relative; z-index: 2; margin-top: 72px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255,255,255,.14); }
+    .stats div { padding: 22px 24px 0 0; }
+    .stats div + div { padding-left: 24px; border-left: 1px solid rgba(255,255,255,.14); }
+    .stats small { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .stats strong { display: block; margin-top: 8px; font-size: clamp(22px, 2.3vw, 32px); font-weight: 500; letter-spacing: -0.02em; }
+
+    /* ---------- about / manifesto with orbiting tiles */
+    .manifesto { background: var(--navy-deep); padding-block: 180px; overflow: hidden; text-align: center; }
+    .manifesto .beam { position: absolute; inset: -20% -30% -20% 40%; background: conic-gradient(from 210deg at 0% 50%, transparent 0deg, rgba(255,184,28,.18) 25deg, rgba(11,52,112,.55) 50deg, transparent 80deg); filter: blur(40px); pointer-events: none; }
+    .orbit { position: absolute; left: 50%; top: 50%; width: 1100px; height: 1100px; margin: -550px 0 0 -550px; animation: spin 80s linear infinite; pointer-events: none; }
+    .orbit .tile { --s: 74px; left: calc(50% + var(--ox) - 37px); top: calc(50% + var(--oy) - 37px); animation: counter 80s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes counter { to { transform: rotate(-360deg); } }
+    .manifesto .inner { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; }
+    .manifesto h2 { margin-top: 30px; }
+    .manifesto h2 .dim { color: rgba(255,255,255,.28); transition: color .9s var(--ease); }
+    .manifesto h2.in .dim { color: var(--white); }
+    .manifesto p.lede { max-width: 58ch; margin: 34px auto 0; }
+
+    /* ---------- photo duotone */
+    .photo { position: relative; overflow: hidden; background: var(--navy); }
+    .photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1) brightness(.95); transform: scale(1.08); transition: transform 1.6s var(--ease); }
+    .photo.in img, .rv.in .photo img { transform: scale(1); }
+    .photo::before { content: ""; position: absolute; inset: 0; background: var(--navy); mix-blend-mode: multiply; z-index: 1; opacity: .72; }
+    .photo::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(160deg, rgba(255,184,28,.0) 40%, rgba(255,184,28,.38) 100%); mix-blend-mode: screen; }
+    .photo.soft::before { opacity: .5; }
+    .photo .cap { position: absolute; z-index: 2; left: 22px; bottom: 20px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--white); display: flex; gap: 10px; align-items: center; }
+    .photo .cap::before { content: ""; width: 8px; height: 8px; background: var(--gold); }
+
+    /* ---------- problem */
+    .problem { padding-block: 140px; }
+    .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+    .problem .photo { aspect-ratio: 4 / 5; }
+    .cards4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin-top: 52px; border-top: 1px solid #D8DFEC; }
+    .cards4 article { padding: 28px 28px 28px 0; border-bottom: 1px solid #D8DFEC; }
+    .cards4 article:nth-child(even) { padding-left: 28px; padding-right: 0; border-left: 1px solid #D8DFEC; }
+    .cards4 .n { font-family: var(--mono); font-size: 12px; color: var(--gold-text); letter-spacing: .1em; }
+    .cards4 h3 { font-size: 20px; font-weight: 600; margin-top: 12px; letter-spacing: -0.01em; }
+    .cards4 p { margin-top: 10px; font-size: 15.5px; line-height: 1.65; color: var(--slate); }
+
+    /* ---------- build (dark grid of glass cards) */
+    .build { background: var(--navy); padding-block: 150px 140px; overflow: hidden; }
+    .build .gridbg { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 80px 80px; -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 75%); mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 75%); pointer-events: none; }
+    .sec-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px 64px; align-items: end; }
+    .sec-head h2 { margin-top: 26px; }
+    .glass6 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 72px; }
+    .glass { position: relative; padding: 34px 30px 32px; background: linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.015)); border: 1px solid rgba(255,255,255,.1); overflow: hidden; transition: border-color .35s, transform .5s var(--ease); }
+    .glass::before { content: ""; position: absolute; width: 260px; height: 260px; left: var(--mx, 50%); top: var(--my, 50%); transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(255,184,28,.22), transparent 65%); opacity: 0; transition: opacity .35s; pointer-events: none; }
+    .glass:hover { border-color: rgba(255,184,28,.5); transform: translateY(-4px); }
+    .glass:hover::before { opacity: 1; }
+    .glass .tile { position: relative; left: auto; top: auto; --s: 54px; animation: none; transform: none; }
+    .glass h3 { font-size: 21px; font-weight: 500; margin-top: 28px; letter-spacing: -0.01em; }
+    .glass p { margin-top: 10px; font-size: 15.5px; line-height: 1.65; color: var(--mist); }
+    .glass .idx { position: absolute; top: 24px; right: 26px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+    .banner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); margin-top: 18px; border: 1px solid rgba(255,255,255,.1); }
+    .banner .photo { min-height: 340px; }
+    .banner .txt { padding: 48px 46px; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(160deg, rgba(255,184,28,.12), rgba(255,184,28,.02)); }
+    .banner .txt h3 { font-size: clamp(26px, 2.6vw, 36px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; }
+    .banner .txt p { margin-top: 16px; color: var(--mist); font-size: 16.5px; line-height: 1.65; }
+
+    /* ---------- process */
+    .process { background: var(--navy-deep); padding-block: 150px; overflow: hidden; }
+    .steps { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; margin-top: 84px; }
+    .steps .track { position: absolute; left: 0; right: 0; top: 27px; height: 1px; background: rgba(255,255,255,.14); }
+    .steps .track i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--gold); box-shadow: 0 0 14px var(--gold); transition: width 2.2s var(--ease); }
+    .steps.in .track i { width: 100%; }
+    .step { position: relative; }
+    .step .dot { width: 54px; height: 54px; display: grid; place-items: center; background: var(--navy-deep); border: 1px solid rgba(255,255,255,.22); font-family: var(--mono); font-size: 14px; color: var(--white); position: relative; transition: background .5s, color .5s, border-color .5s; }
+    .steps.in .step .dot { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+    .steps.in .step:nth-child(2) .dot { transition-delay: .2s; } .steps.in .step:nth-child(3) .dot { transition-delay: .8s; } .steps.in .step:nth-child(4) .dot { transition-delay: 1.4s; } .steps.in .step:nth-child(5) .dot { transition-delay: 2s; }
+    .step h3 { margin-top: 30px; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; }
+    .step p { margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: var(--mist); }
+    .step .photo { aspect-ratio: 16 / 10; margin-top: 26px; }
+    .closer { margin-top: 96px; padding-top: 46px; border-top: 1px solid rgba(255,255,255,.12); display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: baseline; justify-content: space-between; }
+    .closer p { font-size: clamp(24px, 2.6vw, 36px); letter-spacing: -0.02em; line-height: 1.2; max-width: 30ch; }
+
+    /* ---------- alternatives */
+    .alts { padding-block: 140px; }
+    .alts-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 64px; }
+    .alt { padding: 32px 28px; background: var(--ice); border: 1px solid #E2E8F1; display: flex; flex-direction: column; }
+    .alt .half { display: flex; gap: 6px; margin-bottom: 30px; }
+    .alt .half i { width: 34px; height: 8px; background: #D2DAE8; }
+    .alt .half i.on { background: var(--slate); }
+    .alt h3 { font-size: 19px; font-weight: 600; }
+    .alt p { margin-top: 10px; font-size: 15px; line-height: 1.65; color: var(--slate); }
+    .alt.us { background: var(--navy); color: var(--white); border-color: var(--navy); position: relative; overflow: hidden; }
+    .alt.us::after { content: ""; position: absolute; width: 280px; height: 280px; right: -120px; bottom: -120px; background: radial-gradient(circle, rgba(255,184,28,.5), transparent 65%); }
+    .alt.us .half i { background: var(--gold); }
+    .alt.us h3 { color: var(--gold); }
+    .alt.us p { color: var(--mist); position: relative; z-index: 1; }
+    .alts .pull { margin-top: 56px; font-size: clamp(22px, 2.2vw, 30px); letter-spacing: -0.02em; line-height: 1.3; max-width: 34ch; }
+
+    /* ---------- price */
+    .price { padding-block: 140px; }
+    .vs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 20px; margin-top: 64px; align-items: stretch; }
+    .plan { padding: 42px 40px; background: var(--white); border: 1px solid #E2E8F1; }
+    .plan h3 { font-size: 15px; font-family: var(--mono); font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--slate); }
+    .plan .amt { font-size: clamp(38px, 4vw, 56px); font-weight: 400; letter-spacing: -0.035em; margin-top: 16px; color: var(--slate); }
+    .plan .sub { font-size: 14.5px; color: #6B7488; margin-top: 6px; }
+    .plan ul { margin-top: 30px; display: grid; gap: 14px; }
+    .plan li { display: flex; gap: 14px; font-size: 15.5px; line-height: 1.55; color: var(--slate); }
+    .plan li::before { content: ""; flex: none; width: 14px; height: 1px; background: #B4BED0; margin-top: 11px; }
+    .plan.us { background: var(--navy); border-color: var(--navy); color: var(--white); position: relative; overflow: hidden; }
+    .plan.us::before { content: ""; position: absolute; inset: auto -100px -180px auto; width: 460px; height: 460px; background: radial-gradient(circle, rgba(255,184,28,.35), transparent 65%); }
+    .plan.us h3 { color: var(--gold); }
+    .plan.us .amt { color: var(--white); }
+    .plan.us .sub { color: var(--muted); }
+    .plan.us li { color: var(--white); position: relative; }
+    .plan.us li::before { background: var(--gold); height: 2px; }
+    .price .note { margin-top: 30px; font-size: 15.5px; line-height: 1.7; color: var(--slate); max-width: 74ch; }
+
+    /* ---------- who (interactive checklist) */
+    .who { background: var(--navy); padding-block: 150px; overflow: hidden; }
+    .who .split { align-items: start; }
+    .who .photo { aspect-ratio: 5 / 4; margin-top: 44px; }
+    .meter { margin-top: 34px; display: flex; align-items: center; gap: 18px; }
+    .meter .bars { display: flex; gap: 5px; }
+    .meter .bars i { width: 22px; height: 6px; background: rgba(255,255,255,.16); transition: background .3s; }
+    .meter .bars i.on { background: var(--gold); }
+    .meter .bars i.th { outline: 1px dashed rgba(255,184,28,.6); outline-offset: 3px; }
+    .meter span { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; color: var(--mist); }
+    .meter span b { color: var(--gold); font-weight: 500; }
+    .checks { border-top: 1px solid rgba(255,255,255,.14); }
+    .checks button { all: unset; box-sizing: border-box; width: 100%; display: flex; gap: 18px; align-items: flex-start; padding: 22px 6px; border-bottom: 1px solid rgba(255,255,255,.14); cursor: pointer; font-size: 17px; line-height: 1.5; color: var(--mist); transition: color .25s, background .25s; }
+    .checks button:hover { color: var(--white); background: rgba(255,255,255,.03); }
+    .checks button:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+    .checks .box { flex: none; width: 22px; height: 22px; border: 1px solid rgba(255,255,255,.4); margin-top: 2px; display: grid; place-items: center; transition: background .25s, border-color .25s; }
+    .checks .box svg { width: 13px; opacity: 0; transform: scale(.4); transition: opacity .25s, transform .3s var(--ease); stroke: var(--navy); fill: none; stroke-width: 3; }
+    .checks button[aria-pressed="true"] { color: var(--white); }
+    .checks button[aria-pressed="true"] .box { background: var(--gold); border-color: var(--gold); }
+    .checks button[aria-pressed="true"] .box svg { opacity: 1; transform: none; }
+    .verdict { margin-top: 30px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+    .verdict p { font-size: 16px; color: var(--mist); }
+    .verdict .btn { opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .4s, transform .4s var(--ease), background .25s; }
+    .verdict.ready .btn { opacity: 1; transform: none; pointer-events: auto; }
+
+    /* ---------- trust */
+    .trust { padding-block: 140px; }
+    .trust-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 64px; }
+    .trust-grid article { padding: 30px 26px 32px; background: var(--white); border: 1px solid #E2E8F1; transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+    .trust-grid article:hover { transform: translateY(-4px); box-shadow: 0 24px 40px -24px rgba(4,30,66,.35); }
+    .trust-grid .ic { width: 44px; height: 44px; background: var(--navy); display: grid; place-items: center; }
+    .trust-grid .ic svg { width: 20px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .trust-grid h3 { font-size: 18px; font-weight: 600; margin-top: 24px; line-height: 1.3; }
+    .trust-grid p { margin-top: 10px; font-size: 15px; line-height: 1.65; color: var(--slate); }
+    .trust .pull { margin-top: 46px; font-size: 18px; line-height: 1.6; max-width: 62ch; }
+
+    /* ---------- contact */
+    .contact { min-height: 92vh; display: flex; align-items: center; overflow: hidden; padding-block: 140px; }
+    .contact .bg { position: absolute; inset: 0; }
+    .contact .bg .photo { position: absolute; inset: 0; }
+    .contact .bg::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(2,15,36,.96) 0%, rgba(2,15,36,.8) 45%, rgba(2,15,36,.35) 100%); }
+    .contact .glow { right: -300px; top: auto; bottom: -460px; z-index: 2; }
+    .contact .wrap { position: relative; z-index: 3; }
+    .contact h2 { max-width: 13ch; margin-top: 28px; }
+    .contact p.lede { max-width: 52ch; margin-top: 28px; }
+    .contact .btns { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .contact .mail { font-family: var(--mono); font-size: 14px; color: var(--mist); letter-spacing: .04em; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 3px; }
+    .contact .mail:hover { color: var(--gold); border-color: var(--gold); }
+    .contact .fine { margin-top: 26px; font-size: 14.5px; color: var(--muted); }
+
+    /* ---------- footer */
+    footer { background: var(--navy-deep); border-top: 1px solid rgba(255,255,255,.08); padding-block: 38px; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: center; font-size: 14px; color: var(--muted); }
+    footer .logo { font-size: 15px; color: var(--white); }
+    footer .logo i { width: 16px; height: 16px; }
+    footer .logo i::after { width: 6px; height: 6px; }
+    footer a { text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+    footer .r { margin-left: auto; display: flex; gap: 28px; flex-wrap: wrap; }
+
+    /* ---------- responsive */
+    @media (max-width: 1080px) {
+      .hero-copy, .sec-head, .split, .banner, .vs { grid-template-columns: 1fr; }
+      .glass6, .alts-grid, .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; }
+      .steps .track { display: none; }
+      .problem .photo { aspect-ratio: 16 / 10; }
+      .nav nav { display: none; }
+      .nav .btn { margin-left: auto; }
+      .orbit { width: 760px; height: 760px; margin: -380px 0 0 -380px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { padding-inline: 20px; }
+      .glass6, .alts-grid, .trust-grid, .steps, .cards4 { grid-template-columns: 1fr; }
+      .cards4 article:nth-child(even) { padding-left: 0; border-left: 0; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stats div:nth-child(3) { padding-left: 0; border-left: 0; }
+      .stats div:nth-child(n+3) { margin-top: 18px; }
+      .problem, .build, .process, .alts, .price, .who, .trust { padding-block: 96px; }
+      .manifesto { padding-block: 130px; }
+      .tile.hide-sm { display: none; }
+      .chapter { display: none; }
+      .hero { padding-top: 120px; }
+      .hero .tiles { display: none; }
+      .tile.blur { display: none; }
+      .nav .btn { padding: 9px 14px; font-size: 13.5px; }
+      .logo { font-size: 16px; }
+      .hero-side .btns .btn { flex: 1 1 auto; justify-content: center; }
+      .banner .txt { padding: 34px 26px; }
+      .plan { padding: 34px 26px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .rv { opacity: 1; transform: none; filter: none; }
+      .manifesto h2 .dim { color: var(--white); }
     }
   </style>
 </head>
 <body>
-<div style="width: 100%; overflow-x: hidden">
 
-  <!-- ============================ NAV -->
-  <header style="border-bottom: 1px solid #E2E8F1; background: #FFFFFF">
-    <div class="wrap" style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; padding-block: 22px">
-      <a href="#top" style="font-family: Literata, Georgia, serif; font-size: 23px; font-weight: 700; text-decoration: none; letter-spacing: -0.02em">SCA&nbsp;People</a>
-      <nav style="display: flex; flex-wrap: wrap; gap: 28px; margin-left: auto; font-size: 15px; font-weight: 500">
-        <a href="#problem" style="text-decoration: none; color: #4A5468">The problem</a>
-        <a href="#build" style="text-decoration: none; color: #4A5468">What we build</a>
-        <a href="#timeline" style="text-decoration: none; color: #4A5468">How it runs</a>
-        <a href="#price" style="text-decoration: none; color: #4A5468">Pricing</a>
-      </nav>
-      <a class="btn btn-solid" href="#contact" style="padding: 11px 20px; font-size: 15px">Start a conversation</a>
-    </div>
-  </header>
+<div class="progress" id="progress"></div>
 
-  <!-- ============================ HERO -->
-  <section id="top" style="background: #FFFFFF; padding-block: 104px 88px">
-    <div class="wrap">
-      <div style="display: flex; flex-wrap: wrap; gap: 64px 56px; align-items: flex-start">
+<!-- ============================ NAV -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo"><i></i>SCA People</a>
+    <nav aria-label="Primary">
+      <a href="#problem">The problem</a>
+      <a href="#build">What we build</a>
+      <a href="#process">How it runs</a>
+      <a href="#price">Pricing</a>
+    </nav>
+    <a class="btn btn-gold" href="#contact">Start a conversation</a>
+  </div>
+</header>
 
-        <div style="flex: 999 1 560px; min-width: 0">
-          <div class="eyebrow">Embedded people infrastructure</div>
-          <h1 style="font-size: 58px; line-height: 1.1; max-width: 16ch">We build your people function, then hand it over.</h1>
-          <p class="lede" style="margin-top: 28px; max-width: 54ch">
-            Three senior operators embed with your company. We build how you hire, how you pay and level,
-            how you tell your story to candidates, and the policies underneath it. We do the hiring while we build it.
-            Then we help you hire the person who runs it, train them, and leave.
-          </p>
-          <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px">
-            <a class="btn btn-solid" href="#contact">Start a conversation</a>
-            <a class="btn btn-ghost" href="#timeline">See how it runs</a>
-          </div>
-          <p style="margin-top: 28px; font-size: 14.5px; color: #6B7488">
-            Fixed fee. Fixed end date. Nothing to renew.
-          </p>
-        </div>
-
-        <aside style="flex: 1 1 340px; min-width: 0; background: #041E42; border-radius: 10px; padding: 36px 34px; color: #FFFFFF">
-          <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #FFB81C">The engagement</div>
-          <dl style="margin: 26px 0 0">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-block: 15px; border-top: 1px solid #1C3557">
-              <dt style="font-size: 15px; color: #BCC7DE">Fee</dt>
-              <dd style="margin: 0; font-family: Literata, Georgia, serif; font-size: 25px; font-weight: 600">$250,000</dd>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-block: 15px; border-top: 1px solid #1C3557">
-              <dt style="font-size: 15px; color: #BCC7DE">Operators</dt>
-              <dd style="margin: 0; font-family: Literata, Georgia, serif; font-size: 25px; font-weight: 600">Three senior</dd>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-block: 15px; border-top: 1px solid #1C3557">
-              <dt style="font-size: 15px; color: #BCC7DE">Hires made</dt>
-              <dd style="margin: 0; font-family: Literata, Georgia, serif; font-size: 25px; font-weight: 600">30 to 80</dd>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-block: 15px; border-top: 1px solid #1C3557; border-bottom: 1px solid #1C3557">
-              <dt style="font-size: 15px; color: #BCC7DE">You keep</dt>
-              <dd style="margin: 0; font-family: Literata, Georgia, serif; font-size: 25px; font-weight: 600">All of it</dd>
-            </div>
-          </dl>
-          <p style="margin-top: 22px; font-size: 14.5px; line-height: 1.6; color: #BCC7DE">
-            One fee, one scope, and a people function that keeps working long after we are gone.
-          </p>
-        </aside>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ PROBLEM -->
-  <section id="problem" style="background: #F2F6FC; padding-block: 92px">
-    <div class="wrap">
-      <div class="eyebrow">The problem</div>
-      <h2 style="font-size: 40px; line-height: 1.18; max-width: 22ch">You raised the round. Now you have to rapidly grow your headcount.</h2>
-      <p class="lede" style="margin-top: 22px; max-width: 58ch">
-        Hiring is the last thing a fast-growing company builds on purpose, and the first thing that breaks.
-      </p>
-
-      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px 32px; margin-top: 56px">
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 19px; margin-top: 18px">The pressure is real</h3>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #4A5468">
-            Funding closes and the plan calls for two to four times the team inside a year. The hiring happens whether anyone is ready or not.
-          </p>
-        </article>
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 19px; margin-top: 18px">The job looks covered</h3>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #4A5468">
-            A founder picked it up. Or a Chief of Staff is running a management consulting playbook that was never built for a company at this stage.
-          </p>
-        </article>
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 19px; margin-top: 18px">So it gets built wrong</h3>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #4A5468">
-            Job titles invented one offer at a time. Pay set by whoever negotiated hardest. The bad hires surface later.
-          </p>
-        </article>
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 19px; margin-top: 18px">The fix is hard to judge</h3>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #4A5468">
-            The answer is a Head of People. But you have never done that job, so you cannot tell a strong one from a confident one.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ WHAT WE BUILD -->
-  <section id="build" style="background: #FFFFFF; padding-block: 92px">
-    <div class="wrap">
-      <div class="eyebrow">What we build</div>
-      <h2 style="font-size: 40px; line-height: 1.18; max-width: 20ch">Everything a people function is, installed and documented.</h2>
-      <p class="lede" style="margin-top: 22px; max-width: 58ch">
-        Not a strategy deck. The working parts, built inside your company, used on real hires while we are there.
-      </p>
-
-      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; margin-top: 52px; background: #E2E8F1; border: 1px solid #E2E8F1; border-radius: 10px; overflow: hidden">
-        <article style="background: #FFFFFF; padding: 30px 28px">
-          <h3 style="font-size: 18px">Recruiting engine</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">Named sourcing channels, interview loops by role family, and scorecards your panel actually uses.</p>
-        </article>
-        <article style="background: #FFFFFF; padding: 30px 28px">
-          <h3 style="font-size: 18px">Pay and levels</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">Compensation bands and a leveling framework, so every role is mapped to a level before it opens.</p>
-        </article>
-        <article style="background: #FFFFFF; padding: 30px 28px">
-          <h3 style="font-size: 18px">Your systems, configured</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">The applicant tracking system you already bought, set up with real stages, templates and reporting.</p>
-        </article>
-        <article style="background: #FFFFFF; padding: 30px 28px">
-          <h3 style="font-size: 18px">Your story to candidates</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">Employer brand and hiring narrative, including social, so every offer tells the same story about working here.</p>
-        </article>
-        <article style="background: #FFFFFF; padding: 30px 28px">
-          <h3 style="font-size: 18px">Handbook and policies</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">The compliance documents you are supposed to have already, written for the company you are becoming.</p>
-        </article>
-        <article style="background: #FFFFFF; padding: 30px 28px">
-          <h3 style="font-size: 18px">Managers and onboarding</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">Hiring manager training, and a first week that is more than a laptop and a Slack invite.</p>
-        </article>
-      </div>
-
-      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; margin-top: 36px; padding: 26px 30px; background: #F2F6FC; border-radius: 10px">
-        <p style="flex: 999 1 420px; min-width: 0; font-size: 16.5px; line-height: 1.6">
-          <strong>And we do the hiring while we build it.</strong>
-          Thirty to eighty people, filled by the same operators who are building the machine that fills them.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ TIMELINE -->
-  <section id="timeline" style="background: #041E42; color: #FFFFFF; padding-block: 92px">
-    <div class="wrap">
-      <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #FFB81C; margin-bottom: 20px">How it runs</div>
-      <h2 style="font-size: 40px; line-height: 1.18; max-width: 20ch; color: #FFFFFF">The whole function, not a slate of hires.</h2>
-      <p style="margin-top: 22px; font-size: 18px; line-height: 1.65; color: #C9D3E6; max-width: 60ch">An agency sends resumes and moves on. We leave behind the machine that finds, levels, pays, onboards and keeps people, and the person trained to run all of it.</p>
-
-      <ol style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin: 56px 0 0; padding: 0; list-style: none">
-        <li style="border-top: 2px solid #FFB81C; padding-top: 22px">
-          <div style="font-family: Literata, Georgia, serif; font-size: 30px; font-weight: 600; color: #FFB81C">01</div>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #C9D3E6"><strong style="color: #FFFFFF">We build.</strong> Pay bands, levels, scorecards, your systems configured, your story to candidates, and the handbook underneath it.</p>
-        </li>
-        <li style="border-top: 2px solid #1C3557; padding-top: 22px">
-          <div style="font-family: Literata, Georgia, serif; font-size: 30px; font-weight: 600; color: #FFFFFF">02</div>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #C9D3E6"><strong style="color: #FFFFFF">We hire, at volume.</strong> Thirty to eighty people, filled by the same operators building the machine that fills them.</p>
-        </li>
-        <li style="border-top: 2px solid #1C3557; padding-top: 22px">
-          <div style="font-family: Literata, Georgia, serif; font-size: 30px; font-weight: 600; color: #FFFFFF">03</div>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #C9D3E6"><strong style="color: #FFFFFF">We find your Head of People.</strong> We run the search, present finalists, you make the call. They inherit a function already running.</p>
-        </li>
-        <li style="border-top: 2px solid #1C3557; padding-top: 22px">
-          <div style="font-family: Literata, Georgia, serif; font-size: 30px; font-weight: 600; color: #FFFFFF">04</div>
-          <p style="margin-top: 12px; font-size: 15.5px; line-height: 1.65; color: #C9D3E6"><strong style="color: #FFFFFF">We hand over and leave.</strong> You keep the playbook, the systems, the data and the person trained to run them.</p>
-        </li>
-      </ol>
-
-      <p style="margin-top: 48px; padding-top: 32px; border-top: 1px solid #1C3557; font-size: 18px; line-height: 1.6; max-width: 62ch; color: #FFFFFF">
-        Most firms in this business are built to renew. This one is built to finish.
-      </p>
-    </div>
-  </section>
-
-  <!-- ============================ WHITE SPACE -->
-  <section style="background: #FFFFFF; padding-block: 92px">
-    <div class="wrap">
-      <div class="eyebrow">Why not the alternatives</div>
-      <h2 style="font-size: 40px; line-height: 1.18; max-width: 20ch">Everyone else solves half of the problem.</h2>
-
-      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 52px">
-        <article style="background: #F2F6FC; border-radius: 10px; padding: 30px 28px">
-          <h3 style="font-size: 18px">Consultants and advisors</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">Design the system. Hand over a document and a calendar link. They do not do any of the hiring.</p>
-        </article>
-        <article style="background: #F2F6FC; border-radius: 10px; padding: 30px 28px">
-          <h3 style="font-size: 18px">Recruiting agencies</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">Fill the open jobs while they are there. Leave behind no pay structure, no job levels, no playbook.</p>
-        </article>
-        <article style="background: #F2F6FC; border-radius: 10px; padding: 30px 28px">
-          <h3 style="font-size: 18px">A cofounder, part time</h3>
-          <p style="margin-top: 11px; font-size: 15px; line-height: 1.65; color: #4A5468">Running hiring on instinct, squeezed in alongside the job they were actually hired to do.</p>
-        </article>
-      </div>
-
-      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px 36px; margin-top: 24px; background: #041E42; border-radius: 10px; padding: 34px 32px">
-        <div style="flex: 1 1 200px; min-width: 0; font-family: Literata, Georgia, serif; font-size: 23px; font-weight: 700; color: #FFB81C">SCA People</div>
-        <p style="flex: 999 1 460px; min-width: 0; font-size: 16.5px; line-height: 1.6; color: #FFFFFF">
-          Builds the system and does the hiring at the same time, trains the person who takes it over, and walks away.
-        </p>
-      </div>
-
-      <p style="margin-top: 32px; font-size: 18px; line-height: 1.6; color: #4A5468; max-width: 62ch">
-        You can buy capacity. You can buy advice. Nobody sells both and then removes themselves.
-      </p>
-    </div>
-  </section>
-
-  <!-- ============================ PRICE -->
-  <section id="price" style="background: #F2F6FC; padding-block: 92px">
-    <div class="wrap">
-      <div class="eyebrow">What it costs</div>
-      <h2 style="font-size: 40px; line-height: 1.18; max-width: 22ch">$250,000 per project, not per month.</h2>
-      <p class="lede" style="margin-top: 22px; max-width: 58ch">
-        One fixed fee, paid across the engagement. Compare it to the thing you were already budgeting for.
-      </p>
-
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 52px">
-        <article style="background: #FFFFFF; border: 1px solid #E2E8F1; border-radius: 10px; padding: 34px 32px">
-          <h3 style="font-size: 19px; color: #4A5468">One founding recruiter</h3>
-          <div style="font-family: Literata, Georgia, serif; font-size: 38px; font-weight: 600; margin-top: 10px; color: #4A5468">$175K to $200K</div>
-          <p style="margin-top: 8px; font-size: 14.5px; color: #6B7488">Base salary alone</p>
-          <ul style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 1.55; color: #4A5468">
-            <li style="padding-left: 18px; border-left: 2px solid #D8DFEC">Plus equity, benefits and payroll tax</li>
-            <li style="padding-left: 18px; border-left: 2px solid #D8DFEC">Three months to find and close them</li>
-            <li style="padding-left: 18px; border-left: 2px solid #D8DFEC">One person, hired by someone who has never hired that role</li>
-            <li style="padding-left: 18px; border-left: 2px solid #D8DFEC">Permanent headcount on your plan</li>
-          </ul>
-        </article>
-
-        <article style="background: #FFFFFF; border: 2px solid #041E42; border-radius: 10px; padding: 34px 32px">
-          <h3 style="font-size: 19px">SCA People</h3>
-          <div style="font-family: Literata, Georgia, serif; font-size: 38px; font-weight: 600; margin-top: 10px">$250,000</div>
-          <p style="margin-top: 8px; font-size: 14.5px; color: #6B7488">Fixed, for the whole project</p>
-          <ul style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 1.55">
-            <li style="padding-left: 18px; border-left: 2px solid #FFB81C">Three senior operators, not one hire</li>
-            <li style="padding-left: 18px; border-left: 2px solid #FFB81C">Thirty to eighty hires made while we build</li>
-            <li style="padding-left: 18px; border-left: 2px solid #FFB81C">The whole function documented and yours to keep</li>
-            <li style="padding-left: 18px; border-left: 2px solid #FFB81C">Your Head of People hired, trained and handed the keys</li>
-          </ul>
-        </article>
-      </div>
-
-      <p style="margin-top: 28px; font-size: 15px; line-height: 1.65; color: #4A5468; max-width: 70ch">
-        We do not start without a signed operating agreement: scorecards, levels and hiring manager time committed up front.
-        No agreement, no engagement. The engagement ends at handoff. If you want us around after that, we can talk about it then.
-      </p>
-    </div>
-  </section>
-
-  <!-- ============================ WHO -->
-  <section style="background: #FFFFFF; padding-block: 92px">
-    <div class="wrap">
-      <div style="display: flex; flex-wrap: wrap; gap: 48px 56px">
-        <div style="flex: 1 1 420px; min-width: 0">
-          <div class="eyebrow">Who this is for</div>
-          <h2 style="font-size: 36px; line-height: 1.2; max-width: 18ch">If three of these are true, we should talk.</h2>
-        </div>
-        <ul style="flex: 999 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 0">
-          <li style="padding-block: 20px; border-top: 1px solid #E2E8F1; font-size: 16.5px; line-height: 1.55">You closed a round in the last few months and the headcount plan doubled</li>
-          <li style="padding-block: 20px; border-top: 1px solid #E2E8F1; font-size: 16.5px; line-height: 1.55">You need to make thirty to eighty hires and have no one who owns hiring</li>
-          <li style="padding-block: 20px; border-top: 1px solid #E2E8F1; font-size: 16.5px; line-height: 1.55">Salaries are negotiated one offer at a time, with no bands behind them</li>
-          <li style="padding-block: 20px; border-top: 1px solid #E2E8F1; font-size: 16.5px; line-height: 1.55">You're using a benchmarking subscription and applying the generic bands as-is, with no levels underneath them and nobody who can tell you which numbers actually clear</li>
-          <li style="padding-block: 20px; border-top: 1px solid #E2E8F1; font-size: 16.5px; line-height: 1.55">The people you actually wanted are taking counter-offers, or going quiet halfway through your interview process</li>
-          <li style="padding-block: 20px; border-top: 1px solid #E2E8F1; font-size: 16.5px; line-height: 1.55">A founder or Chief of Staff is doing this on top of their real job</li>
-          <li style="padding-block: 20px; border-top: 1px solid #E2E8F1; border-bottom: 1px solid #E2E8F1; font-size: 16.5px; line-height: 1.55">You know you need a Head of People and do not know how to evaluate one</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ CONFIDENTIALITY -->
-  <section id="confidentiality" style="background: #F2F6FC; padding-block: 86px">
-    <div class="wrap">
-      <div class="eyebrow">Confidentiality</div>
-      <h2 style="font-size: 36px; line-height: 1.2; max-width: 22ch">We will see your pay data, your org chart and your board's plan.</h2>
-      <p class="lede" style="margin-top: 22px; max-width: 58ch">
-        That is the job. Here is exactly how we handle it, and all of it is written into the engagement agreement before we start.
-      </p>
-
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 36px; margin-top: 48px">
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 18px; margin-top: 18px">An NDA before the first real conversation</h3>
-          <p style="margin-top: 11px; font-size: 15.5px; line-height: 1.65; color: #4A5468">Signed before you show us anything, not after we have won the work.</p>
-        </article>
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 18px; margin-top: 18px">Your data does not travel</h3>
-          <p style="margin-top: 11px; font-size: 15.5px; line-height: 1.65; color: #4A5468">Your pay bands, hiring plans and candidate pipeline stay yours. Nothing identifiable moves to another engagement, ever.</p>
-        </article>
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 18px; margin-top: 18px">Benchmarks are aggregated and anonymized</h3>
-          <p style="margin-top: 11px; font-size: 15.5px; line-height: 1.65; color: #4A5468">What we learn across engagements sharpens the ranges we bring you. It is aggregated and anonymized, never attributable to a company, and it only happens if you opt in.</p>
-        </article>
-        <article>
-          <div class="rule"></div>
-          <h3 style="font-size: 18px; margin-top: 18px">We do not recruit from you</h3>
-          <p style="margin-top: 11px; font-size: 15.5px; line-height: 1.65; color: #4A5468">Not during the engagement, and not for twelve months after it ends. Your people are not our pipeline.</p>
-        </article>
-      </div>
-
-      <p style="margin-top: 36px; font-size: 16.5px; line-height: 1.6; color: #041E42; max-width: 66ch">
-        When we leave, everything goes with you, including the records we built while we were there.
-      </p>
-    </div>
-  </section>
-
-  <!-- ============================ CONTACT -->
-  <section id="contact" style="background: #041E42; color: #FFFFFF; padding-block: 92px">
-    <div class="wrap">
-      <div style="display: flex; flex-wrap: wrap; gap: 40px 56px; align-items: flex-start">
-        <div style="flex: 999 1 480px; min-width: 0">
-          <h2 style="font-size: 40px; line-height: 1.18; color: #FFFFFF; max-width: 18ch">Tell us what you have to hire and by when.</h2>
-          <p style="margin-top: 22px; font-size: 18px; line-height: 1.65; color: #C9D3E6; max-width: 54ch">
-            First conversation is thirty minutes and costs nothing. We will tell you honestly whether this is the right
-            answer for where you are, including when it is not.
-          </p>
-        </div>
-        <div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
-          <a class="btn" href="mailto:hello@scapeople.com" style="background: #FFB81C; color: #041E42; text-align: center">Reach out to us here</a>
-          <p style="font-size: 14.5px; line-height: 1.6; color: #9FAEC9; margin-top: 6px">
-            We work wherever your team sits, embedded in your calendar and your systems.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ FOOTER -->
-  <footer style="background: #FFFFFF; padding-block: 40px">
-    <div class="wrap" style="display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: center; font-size: 14px; color: #6B7488">
-      <div style="font-family: Literata, Georgia, serif; font-size: 17px; font-weight: 700; color: #041E42">SCA&nbsp;People</div>
-      <div style="margin-left: auto">SCA People LLC</div>
-      <div>hello@scapeople.com</div>
-    </div>
-  </footer>
-
+<!-- chapter marker -->
+<div class="chapter" aria-hidden="true">
+  <div class="num"><span id="chNum">00</span></div>
+  <div class="lbl"><small>CHAPTER</small><span id="chName">Welcome</span></div>
 </div>
+
+<!-- ============================ HERO -->
+<section class="hero" id="top" data-ch="00" data-name="Welcome">
+  <div class="glow"></div>
+  <div class="stars"></div>
+  <div class="stage"><div class="floor"></div></div>
+
+  <div class="parallax" id="px">
+    <div class="tiles">
+      <div class="tile" style="--x:50%;--y:17%;--s:104px;--r:-8deg;--t:7s">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2c2.6-.4 4.6 1.2 5 4.3"/></svg>
+      </div>
+      <div class="tile g" style="--x:64%;--y:12%;--s:128px;--r:6deg;--t:8s;--dl:-2s">
+        <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      </div>
+      <div class="tile hide-sm" style="--x:81%;--y:26%;--s:96px;--r:10deg;--t:6.5s;--dl:-1s">
+        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      </div>
+      <div class="tile hide-sm" style="--x:91%;--y:19%;--s:64px;--r:-12deg;--t:9s;--dl:-4s">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>
+      </div>
+      <div class="tile blur hide-sm" style="--x:57%;--y:31%;--s:56px;--r:14deg;--t:10s;--dl:-3s">
+        <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+      </div>
+      <div class="tile hide-sm" style="--x:69%;--y:34%;--s:66px;--r:-6deg;--t:7.5s;--dl:-5s">
+        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </div>
+      <div class="tile blur" style="--x:88%;--y:41%;--s:44px;--r:18deg;--t:8.5s;--dl:-2.5s">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero-copy">
+      <div>
+        <div class="kicker rv">Embedded people infrastructure</div>
+        <h1 class="h-xl rv d1">We build your people function, then <em>hand it over.</em></h1>
+      </div>
+      <div class="hero-side">
+        <p class="rv d2">Three senior operators embed with your company. We build how you hire, how you pay and level, how you tell your story to candidates, and the policies underneath it. We do the hiring while we build it. Then we help you hire the person who runs it, train them, and leave.</p>
+        <div class="btns rv d3">
+          <a class="btn btn-gold" href="#contact">Start a conversation <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+          <a class="btn btn-line" href="#process">See how it runs</a>
+        </div>
+        <div class="fine rv d4">Fixed fee. Fixed end date. Nothing to renew.</div>
+      </div>
+    </div>
+
+    <div class="stats rv d4">
+      <div><small>Fee</small><strong>$250,000</strong></div>
+      <div><small>Operators</small><strong>Three senior</strong></div>
+      <div><small>Hires made</small><strong>Every one</strong></div>
+      <div><small>You keep</small><strong class="gold">All of it</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MANIFESTO -->
+<section class="manifesto" data-ch="01" data-name="About">
+  <div class="beam"></div>
+  <div class="orbit" aria-hidden="true">
+    <div class="tile" style="--ox:-520px;--oy:0px"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/></svg></div>
+    <div class="tile g" style="--ox:-368px;--oy:-368px"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7"/></svg></div>
+    <div class="tile" style="--ox:0px;--oy:-520px"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8"/></svg></div>
+    <div class="tile" style="--ox:368px;--oy:-368px"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5"/></svg></div>
+    <div class="tile g" style="--ox:520px;--oy:0px"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div>
+    <div class="tile" style="--ox:368px;--oy:368px"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div>
+    <div class="tile" style="--ox:0px;--oy:520px"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></div>
+    <div class="tile" style="--ox:-368px;--oy:368px"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+  </div>
+  <div class="wrap inner">
+    <div class="tag rv"><b>01</b><span>About</span></div>
+    <h2 class="h-xl rv d1" id="manifestoH">Built to <span class="dim">finish.</span><br>Not to <span class="dim">renew.</span></h2>
+    <p class="lede rv d2">Most firms in this business are built to renew. This one is built to finish. We leave behind the machine that finds, levels, pays, onboards and keeps people, and the person trained to run all of it.</p>
+  </div>
+</section>
+
+<!-- ============================ PROBLEM -->
+<section class="problem light" id="problem" data-ch="02" data-name="Problem">
+  <div class="wrap split">
+    <div class="photo rv">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1100&h=1375&q=75" alt="A startup team working together at laptops">
+      <div class="cap">Post-raise, pre-structure</div>
+    </div>
+    <div>
+      <div class="tag rv"><b>02</b><span>The problem</span></div>
+      <h2 class="h-lg rv d1" style="margin-top:26px">You raised the round. Now you have to rapidly grow your headcount.</h2>
+      <p class="lede rv d2" style="margin-top:22px;max-width:52ch">Hiring is the last thing a fast-growing company builds on purpose, and the first thing that breaks.</p>
+      <div class="cards4">
+        <article class="rv d1"><div class="n">/01</div><h3>The pressure is real</h3><p>Funding closes and the plan calls for two to four times the team inside a year. The hiring happens whether anyone is ready or not.</p></article>
+        <article class="rv d2"><div class="n">/02</div><h3>The job looks covered</h3><p>A founder picked it up. Or a Chief of Staff is running a management consulting playbook that was never built for a company at this stage.</p></article>
+        <article class="rv d3"><div class="n">/03</div><h3>So it gets built wrong</h3><p>Job titles invented one offer at a time. Pay set by whoever negotiated hardest. The bad hires surface later.</p></article>
+        <article class="rv d4"><div class="n">/04</div><h3>The fix is hard to judge</h3><p>The answer is a Head of People. But you have never done that job, so you cannot tell a strong one from a confident one.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHAT WE BUILD -->
+<section class="build" id="build" data-ch="03" data-name="Build">
+  <div class="gridbg"></div>
+  <div class="wrap" style="position:relative">
+    <div class="sec-head">
+      <div>
+        <div class="tag rv"><b>03</b><span>What we build</span></div>
+        <h2 class="h-lg rv d1">Everything a people function is, installed and documented.</h2>
+      </div>
+      <p class="lede rv d2">Not a strategy deck. The working parts, built inside your company, used on real hires while we are there.</p>
+    </div>
+
+    <div class="glass6">
+      <article class="glass rv"><span class="idx">01</span>
+        <div class="tile"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg></div>
+        <h3>Recruiting engine</h3><p>Named sourcing channels, interview loops by role family, and scorecards your panel actually uses.</p></article>
+      <article class="glass rv d1"><span class="idx">02</span>
+        <div class="tile g"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <h3>Pay and levels</h3><p>Compensation bands and a leveling framework, so every role is mapped to a level before it opens.</p></article>
+      <article class="glass rv d2"><span class="idx">03</span>
+        <div class="tile"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9h4M7 12h7"/></svg></div>
+        <h3>Your systems, configured</h3><p>The applicant tracking system you already bought, set up with real stages, templates and reporting.</p></article>
+      <article class="glass rv"><span class="idx">04</span>
+        <div class="tile"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></div>
+        <h3>Your story to candidates</h3><p>Employer brand and hiring narrative, including social, so every offer tells the same story about working here.</p></article>
+      <article class="glass rv d1"><span class="idx">05</span>
+        <div class="tile"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg></div>
+        <h3>Handbook and policies</h3><p>The compliance documents you are supposed to have already, written for the company you are becoming.</p></article>
+      <article class="glass rv d2"><span class="idx">06</span>
+        <div class="tile g"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M7 10.5V16c2.8 2 7.2 2 10 0v-5.5"/></svg></div>
+        <h3>Managers and onboarding</h3><p>Hiring manager training, and a first week that is more than a laptop and a Slack invite.</p></article>
+    </div>
+
+    <div class="banner rv">
+      <div class="photo soft">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&h=800&q=75" alt="A team mapping out plans on a whiteboard with sticky notes">
+        <div class="cap">Built on real hires</div>
+      </div>
+      <div class="txt">
+        <h3>And we do the hiring <span class="gold">while we build it.</span></h3>
+        <p>Every open role, filled by the same operators who are building the machine that fills them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROCESS -->
+<section class="process" id="process" data-ch="04" data-name="Process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="tag rv"><b>04</b><span>How it runs</span></div>
+        <h2 class="h-lg rv d1">The whole function, not a slate of hires.</h2>
+      </div>
+      <p class="lede rv d2">An agency sends resumes and moves on. We leave behind the machine that finds, levels, pays, onboards and keeps people, and the person trained to run all of it.</p>
+    </div>
+
+    <ol class="steps" id="steps">
+      <li class="track" aria-hidden="true"><i></i></li>
+      <li class="step rv">
+        <div class="dot">01</div>
+        <h3>We build.</h3>
+        <p>Pay bands, levels, scorecards, your systems configured, your story to candidates, and the handbook underneath it.</p>
+        <div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=700&h=440&q=70" alt="Two colleagues reviewing work together"></div>
+      </li>
+      <li class="step rv d1">
+        <div class="dot">02</div>
+        <h3>We hire, at volume.</h3>
+        <p>Every open role, filled by the same operators building the machine that fills them.</p>
+        <div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&h=440&q=70" alt="A large open-plan office full of people working"></div>
+      </li>
+      <li class="step rv d2">
+        <div class="dot">03</div>
+        <h3>We find your Head of People.</h3>
+        <p>We run the search, present finalists, you make the call. They inherit a function already running.</p>
+        <div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=700&h=440&q=70" alt="Two people celebrating a decision at a desk"></div>
+      </li>
+      <li class="step rv d3">
+        <div class="dot">04</div>
+        <h3>We hand over and leave.</h3>
+        <p>You keep the playbook, the systems, the data and the person trained to run them.</p>
+        <div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=700&h=440&q=70" alt="A leader presenting to a team in a bright office"></div>
+      </li>
+    </ol>
+
+    <div class="closer">
+      <p class="rv">Most firms in this business are built to renew. <span class="gold">This one is built to finish.</span></p>
+      <a class="btn btn-line rv d1" href="#contact">Talk to us <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ALTERNATIVES -->
+<section class="alts light" data-ch="05" data-name="Compare">
+  <div class="wrap">
+    <div class="tag rv"><b>05</b><span>Why not the alternatives</span></div>
+    <h2 class="h-lg rv d1" style="margin-top:26px;max-width:18ch">Everyone else solves half of the problem.</h2>
+    <div class="alts-grid">
+      <article class="alt rv"><div class="half"><i class="on"></i><i></i></div><h3>Consultants and advisors</h3><p>Design the system. Hand over a document and a calendar link. They do not do any of the hiring.</p></article>
+      <article class="alt rv d1"><div class="half"><i></i><i class="on"></i></div><h3>Recruiting agencies</h3><p>Fill the open jobs while they are there. Leave behind no pay structure, no job levels, no playbook.</p></article>
+      <article class="alt rv d2"><div class="half"><i class="on" style="width:14px"></i><i></i></div><h3>A cofounder, part time</h3><p>Running hiring on instinct, squeezed in alongside the job they were actually hired to do.</p></article>
+      <article class="alt us rv d3"><div class="half"><i></i><i></i></div><h3>SCA People</h3><p>Builds the system and does the hiring at the same time, trains the person who takes it over, and walks away.</p></article>
+    </div>
+    <p class="pull rv">You can buy capacity. You can buy advice. <strong>Nobody sells both and then removes themselves.</strong></p>
+  </div>
+</section>
+
+<!-- ============================ PRICE -->
+<section class="price ice" id="price" data-ch="06" data-name="Pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="tag rv"><b>06</b><span>What it costs</span></div>
+        <h2 class="h-lg rv d1">$250,000 per project, <span style="color:var(--gold-text)">not per month.</span></h2>
+      </div>
+      <p class="lede rv d2">One fixed fee, paid across the engagement. Compare it to the thing you were already budgeting for.</p>
+    </div>
+    <div class="vs">
+      <article class="plan rv">
+        <h3>One founding recruiter</h3>
+        <div class="amt">$175K to $200K</div>
+        <div class="sub">Base salary alone</div>
+        <ul>
+          <li>Plus equity, benefits and payroll tax</li>
+          <li>Three months to find and close them</li>
+          <li>One person, hired by someone who has never hired that role</li>
+          <li>Permanent headcount on your plan</li>
+        </ul>
+      </article>
+      <article class="plan us rv d1">
+        <h3>SCA People</h3>
+        <div class="amt">$250,000</div>
+        <div class="sub">Fixed, for the whole project</div>
+        <ul>
+          <li>Three senior operators, not one hire</li>
+          <li>Every open role filled while we build</li>
+          <li>The whole function documented and yours to keep</li>
+          <li>Your Head of People hired, trained and handed the keys</li>
+        </ul>
+      </article>
+    </div>
+    <p class="note rv">We do not start without a signed operating agreement: scorecards, levels and hiring manager time committed up front. No agreement, no engagement. The engagement ends at handoff. If you want us around after that, we can talk about it then.</p>
+  </div>
+</section>
+
+<!-- ============================ WHO -->
+<section class="who" data-ch="07" data-name="Fit">
+  <div class="wrap split">
+    <div>
+      <div class="tag rv"><b>07</b><span>Who this is for</span></div>
+      <h2 class="h-lg rv d1" style="margin-top:26px">If three of these are true, we should talk.</h2>
+      <div class="meter rv d2" aria-live="polite">
+        <div class="bars" id="bars"><i></i><i></i><i class="th"></i><i></i><i></i><i></i><i></i></div>
+        <span><b id="count">0</b> of 7 true</span>
+      </div>
+      <div class="photo rv d3"><img loading="lazy" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1000&h=800&q=72" alt="A leadership team in discussion around a table"></div>
+    </div>
+    <div>
+      <div class="checks" id="checks">
+        <button class="rv" aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>You closed a round in the last few months and the headcount plan doubled</button>
+        <button class="rv" aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>You are hiring faster than anyone inside has hired before, and no one owns it</button>
+        <button class="rv" aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>Salaries are negotiated one offer at a time, with no bands behind them</button>
+        <button class="rv" aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>You're using a benchmarking subscription and applying the generic bands as-is, with no levels underneath them and nobody who can tell you which numbers actually clear</button>
+        <button class="rv" aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>The people you actually wanted are taking counter-offers, or going quiet halfway through your interview process</button>
+        <button class="rv" aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>A founder or Chief of Staff is doing this on top of their real job</button>
+        <button class="rv" aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>You know you need a Head of People and do not know how to evaluate one</button>
+      </div>
+      <div class="verdict" id="verdict">
+        <p id="verdictText">Tick the ones that sound like you.</p>
+        <a class="btn btn-gold" href="#contact">We should talk <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONFIDENTIALITY -->
+<section class="trust ice" id="confidentiality" data-ch="08" data-name="Trust">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="tag rv"><b>08</b><span>Confidentiality</span></div>
+        <h2 class="h-lg rv d1">We will see your pay data, your org chart and your board's plan.</h2>
+      </div>
+      <p class="lede rv d2">That is the job. Here is exactly how we handle it, and all of it is written into the engagement agreement before we start.</p>
+    </div>
+    <div class="trust-grid">
+      <article class="rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M9 15l2 2 4-4"/></svg></div><h3>An NDA before the first real conversation</h3><p>Signed before you show us anything, not after we have won the work.</p></article>
+      <article class="rv d1"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><h3>Your data does not travel</h3><p>Your pay bands, hiring plans and candidate pipeline stay yours. Nothing identifiable moves to another engagement, ever.</p></article>
+      <article class="rv d2"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 11l8-4M8 13l8 4"/></svg></div><h3>Benchmarks are aggregated and anonymized</h3><p>What we learn across engagements sharpens the ranges we bring you. It is aggregated and anonymized, never attributable to a company, and it only happens if you opt in.</p></article>
+      <article class="rv d3"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg></div><h3>We do not recruit from you</h3><p>Not during the engagement, and not for twelve months after it ends. Your people are not our pipeline.</p></article>
+    </div>
+    <p class="pull rv">When we leave, everything goes with you, including the records we built while we were there.</p>
+  </div>
+</section>
+
+<!-- ============================ CONTACT -->
+<section class="contact" id="contact" data-ch="09" data-name="Contact">
+  <div class="bg"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1800&h=1100&q=72" alt=""></div></div>
+  <div class="glow"></div>
+  <div class="wrap">
+    <div class="tag rv"><b>09</b><span>Start a conversation</span></div>
+    <h2 class="h-xl rv d1">Tell us what you have to hire <span class="gold">and by when.</span></h2>
+    <p class="lede rv d2">First conversation is thirty minutes and costs nothing. We will tell you honestly whether this is the right answer for where you are, including when it is not.</p>
+    <div class="btns rv d3">
+      <a class="btn btn-gold" href="mailto:hello@scapeople.com">Reach out to us here <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+      <a class="mail" href="mailto:hello@scapeople.com">hello@scapeople.com</a>
+    </div>
+    <p class="fine rv d4">We work wherever your team sits, embedded in your calendar and your systems.</p>
+  </div>
+</section>
+
+<!-- ============================ FOOTER -->
+<footer>
+  <div class="wrap">
+    <a href="#top" class="logo"><i></i>SCA People</a>
+    <div class="r">
+      <span>SCA People LLC</span>
+      <a href="mailto:hello@scapeople.com">hello@scapeople.com</a>
+      <a href="https://unsplash.com" rel="noopener">Photography: Unsplash</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // reveal on scroll
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rv, .photo, #steps').forEach(function (el) { io.observe(el); });
+
+  // chapter marker
+  var chNum = document.getElementById('chNum'), chName = document.getElementById('chName');
+  var chIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && chNum.textContent !== e.target.dataset.ch) {
+        chNum.style.opacity = chName.style.opacity = 0;
+        setTimeout(function () { chNum.textContent = e.target.dataset.ch; chName.textContent = e.target.dataset.name; chNum.style.opacity = chName.style.opacity = 1; }, 200);
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+  document.querySelectorAll('[data-ch]').forEach(function (s) { chIO.observe(s); });
+
+  // nav background + progress bar
+  var nav = document.getElementById('nav'), bar = document.getElementById('progress');
+  function onScroll() {
+    var y = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    nav.classList.toggle('solid', y > 40);
+    bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // hero parallax
+  var px = document.getElementById('px');
+  if (!reduce && matchMedia('(pointer: fine)').matches) {
+    addEventListener('mousemove', function (e) {
+      if (scrollY > innerHeight) return;
+      var x = (e.clientX / innerWidth - .5) * -26, y = (e.clientY / innerHeight - .5) * -18;
+      px.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+    });
+  }
+
+  // glow follows cursor on glass cards
+  document.querySelectorAll('.glass').forEach(function (c) {
+    c.addEventListener('mousemove', function (e) {
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // fit checklist
+  var btns = document.querySelectorAll('#checks button'), bars = document.querySelectorAll('#bars i');
+  var count = document.getElementById('count'), verdict = document.getElementById('verdict'), vText = document.getElementById('verdictText');
+  function update() {
+    var n = 0; btns.forEach(function (b) { if (b.getAttribute('aria-pressed') === 'true') n++; });
+    count.textContent = n;
+    bars.forEach(function (b, i) { b.classList.toggle('on', i < n); });
+    verdict.classList.toggle('ready', n >= 3);
+    vText.textContent = n >= 3 ? 'That is three or more. This is the situation we were built for.' : n === 0 ? 'Tick the ones that sound like you.' : (3 - n) + ' more and we should definitely talk.';
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); update(); }); });
+})();
+</script>
 </body>
 </html>
