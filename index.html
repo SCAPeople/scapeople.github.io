@@ -110,13 +110,18 @@
     .chapter .lbl small { display: block; font-size: 9.5px; letter-spacing: .14em; color: var(--muted); }
     .chapter .lbl span { display: block; font-size: 12.5px; letter-spacing: .1em; color: var(--white); text-transform: uppercase; margin-top: 2px; }
     .chapter span { transition: opacity .25s; }
+    .chapter { transition: opacity .4s; }
+    .chapter.hide { opacity: 0; }
     .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--gold); width: 0; z-index: 60; }
 
     /* ---------- 00 hero */
     .hero { height: 175vh; }
-    .hero .frame { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 64px; }
+    .hero .frame { display: flex; flex-direction: column; padding-top: 104px; padding-bottom: clamp(28px, 6vh, 64px); }
+    .hero .inner { margin-top: auto; }
+    .hero h1.h-xl { font-size: clamp(38px, min(5.4vw, 9vh), 84px); }
     .hero .inner { will-change: opacity, transform; }
-    .hero-copy { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; }
+    .hero-copy { display: block; max-width: min(640px, 52vw); }
+    .hero-side { margin-top: clamp(18px, 3vh, 30px); }
     .kicker { font-size: 17px; color: var(--mist); margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
     .kicker::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
     .hero h1 { max-width: 12ch; }
@@ -124,7 +129,7 @@
     .hero-side p { color: var(--mist); font-size: 17px; line-height: 1.65; max-width: 46ch; }
     .hero-side .btns { display: flex; flex-wrap: wrap; gap: 20px 24px; margin-top: 30px; align-items: center; }
     .hero-side .fine { margin-top: 22px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-    .stats { margin-top: 64px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255,255,255,.16); }
+    .stats { margin-top: clamp(24px, 6vh, 64px); display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255,255,255,.16); }
     .stats div { padding: 20px 24px 0 0; }
     .stats div + div { padding-left: 24px; border-left: 1px solid rgba(255,255,255,.16); }
     .stats small { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -307,13 +312,22 @@
 
     /* ---------- responsive */
     @media (max-width: 1080px) {
-      .hero-copy, .sec-head, .split, .banner, .vs { grid-template-columns: 1fr; }
+      .sec-head, .split, .banner, .vs { grid-template-columns: 1fr; }
       .glass6, .alts-grid, .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav nav { display: none; }
       .nav .aboutlink { margin-left: auto; }
       .problem .split { gap: 32px; }
       .problem .frame { align-items: flex-start; padding-top: 100px; }
       .seq .photo { height: 140px; }
+    }
+    @media (max-width: 900px) { .hero-copy { max-width: none; } }
+    @media (max-height: 780px) and (min-width: 681px) {
+      .hero-side .fine, .scrollcue { display: none; }
+      .kicker { margin-bottom: 12px; }
+      .hero-side p { font-size: 16px; line-height: 1.55; }
+      .hero-side .btns { margin-top: 20px; }
+      .stats strong { font-size: 22px; }
+      .stats div { padding-top: 12px; }
     }
     @media (max-width: 680px) {
       .wrap { padding-inline: 20px; }
@@ -707,6 +721,7 @@
     var mid = vh() / 2, active = chapters[0];
     chapters.forEach(function (c) { var r = c.getBoundingClientRect(); if (r.top <= mid) active = c; });
     document.body.classList.toggle('on-light', active.hasAttribute('data-light'));
+    document.querySelector('.chapter').classList.toggle('hide', active.dataset.ch === '00');
     if (active.dataset.ch !== curCh) {
       curCh = active.dataset.ch;
       chNum.style.opacity = chName.style.opacity = 0;
@@ -856,10 +871,13 @@ const TAU = Math.PI * 2, E = new THREE.Euler();
 const path = u => new THREE.Vector3(-15 + u * 30, 0, -3 + Math.sin(u * Math.PI * 1.6) * 4.5 - u * 2);
 const STEP_U = [0.12, 0.38, 0.63, 0.88];
 const F = {
-  cluster(j, t, o = {}) {
-    const [a, b, c, d, e, f] = tiles[j].s, side = o.left ? -1 : 1, mb = mobile();
-    const x = side * (mb ? (-9 + a * 18) : (3 + a * 11)), y = (mb ? 9 : 4.6) + b * (mb ? 7 : 5.5) + Math.sin(t * 0.6 + j) * 0.25, z = mb ? -22 + c * 6 : -9 + c * 8;
-    return [x, y, z, (d - .5) * 0.9 + Math.sin(t * .4 + j) * .08, (e - .5) * 1.3, (f - .5) * 0.7, (j === 0 ? 1.4 : 0.6 + a * 0.6)];
+  cluster(j, t) {
+    // placed in screen space so the tiles stay in the open right half, clear of nav, copy and stats
+    const [a, b, c, d, e, f] = tiles[j].s, mb = mobile();
+    const z = -9 + c * 7, dist = 15 - z, hh = Math.tan(camera.fov * Math.PI / 360) * dist, hw = hh * camera.aspect;
+    const u = mb ? -0.85 + a * 1.7 : 0.18 + a * 0.68, v = mb ? -0.2 + b * 0.75 : -0.42 + b * 0.95;
+    const x = 1 + u * hw, y = 3.4 + v * hh + Math.sin(t * 0.6 + j) * 0.25;
+    return [x, y, z, (d - .5) * 0.9 + Math.sin(t * .4 + j) * .08, (e - .5) * 1.3, (f - .5) * 0.7, (j === 0 ? 1.4 : 0.6 + a * 0.55)];
   },
   ring(j, t) {
     const a = j / N * TAU + t * 0.07, mb = mobile(), R = mb ? 4.2 : 8.6;
@@ -916,7 +934,7 @@ const F = {
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 function camForStep(i) { const P = path(STEP_U[i]); return { pos: V(P.x + (mobile() ? 0 : 3), 7.5, P.z + 10), tgt: V(P.x + (mobile() ? 0 : 3.5), mobile() ? 0 : 2.6, P.z - 1.5) }; }
 const KF = {
-  hero:    () => ({ pos: V(0, 4.2, 15), tgt: V(1, 3.4, 0), f: 'cluster', bg: DARK }),
+  hero:    () => ({ pos: V(0, 4.2, 15), tgt: V(1, 3.4, 0), f: 'cluster', bg: DARK, dim: mobile() ? 1 : 0 }),
   about:   () => ({ pos: V(0, 3.6, 17), tgt: V(0, 3.6, 0), f: 'ring', bg: DARK }),
   problem: () => ({ pos: V(-3, 6, 16), tgt: V(1, 2.6, -2), f: 'chaos', bg: DARK }),
   build:   () => ({ pos: V(0, 15, 9), tgt: V(0, 0, -1.5), f: 'grid', bg: NAVY, dim: 0.3 }),
