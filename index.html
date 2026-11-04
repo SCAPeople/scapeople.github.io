@@ -201,7 +201,7 @@
     .process .top { text-align: center; padding-top: 112px; flex: none; }
     .process .top h2 { margin-top: 22px; }
     .process .top p { max-width: 60ch; margin: 18px auto 0; }
-    .stepcard { position: relative; flex: none; margin: clamp(20px, 4vh, 44px) 0 0 max(40px, calc((100vw - 1240px) / 2 + 40px)); width: min(440px, calc(100vw - 80px)); overflow: hidden; }
+    .stepcard { position: relative; flex: none; margin: clamp(20px, 4vh, 44px) auto 0; width: min(440px, calc(100vw - 80px)); overflow: hidden; }
     @media (max-height: 860px) { .stepcard .photo { display: none; } }
     @media (max-height: 700px) { .process .top p { display: none; } .process .top { padding-top: 92px; } }
     .stepcard .photo { height: 150px; }
@@ -539,42 +539,129 @@
   </div>
 </section>
 
-<!-- 06 PRICE (light) -->
-<section class="price light-sec" id="price" data-k="price" data-light data-ch="06" data-name="Pricing">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="tag rv"><b>06</b><span>What it costs</span></div>
-        <h2 class="h-lg rv d1">$250,000 per project, <span style="color:var(--gold-text)">not per month.</span></h2>
-      </div>
-      <p class="lede rv d2">One fixed fee, paid across the engagement. Compare it to the thing you were already budgeting for.</p>
-    </div>
-    <div class="vs">
-      <article class="plan panel rv">
-        <h3>One founding recruiter</h3>
-        <div class="amt">$175K to $200K</div>
-        <div class="sub">Base salary alone</div>
-        <ul>
-          <li>Plus equity, benefits and payroll tax</li>
-          <li>Three months to find and close them</li>
-          <li>One person, hired by someone who has never hired that role</li>
-          <li>Permanent headcount on your plan</li>
-        </ul>
-      </article>
-      <article class="plan panel us rv d1">
-        <h3>SCA People</h3>
-        <div class="amt">$250,000</div>
-        <div class="sub">Fixed, for the whole project</div>
-        <ul>
-          <li>Three senior operators, not one hire</li>
-          <li>Every open role filled while we build</li>
-          <li>The whole function documented and yours to keep</li>
-          <li>Your Head of People (or People/Talent hire) hired, trained and handed the keys</li>
-        </ul>
-      </article>
-    </div>
-    <p class="note rv">We do not start without a signed operating agreement: scorecards, levels and hiring manager time committed up front. No agreement, no engagement. The engagement ends at handoff. If you want us around after that, we can talk about it then.</p>
-  </div>
+<!-- 06 PRICE (light): cost of a wrong first recruiter -->
+<section class="sca-cost light-sec" id="price" data-k="price" data-light data-ch="06" data-name="Pricing" aria-labelledby="sca-cost-title">
+<style>
+.sca-cost{--navy:#041E42;--bronze:var(--gold-text,#8C6000);--gold:#FFB81C;--ink-2:#4A5468;--line:#D9DFEA;--soft:#C3CCDB;color:var(--navy);background:var(--ice,#F2F6FC);position:relative;z-index:1;padding:120px 0 170px;box-sizing:border-box}
+.sca-cost *{box-sizing:border-box}
+.sca-cost .wrap{display:flex;flex-direction:column;gap:64px}
+.sca-cost .eyebrow{margin:0;font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.sca-cost .head{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-end;justify-content:space-between}
+.sca-cost .head-l{flex:1 1 620px;min-width:0}
+.sca-cost .head-l .eyebrow{color:var(--ink-2);margin-bottom:24px}
+.sca-cost h2{margin:0;font-size:clamp(2.75rem,6vw,5.5rem);line-height:.98;letter-spacing:-.035em;font-weight:600}
+.sca-cost h2 .accent{display:block;margin-top:10px;color:var(--bronze)}
+.sca-cost .lede{flex:1 1 360px;min-width:0;margin:0;font-size:1.25rem;line-height:1.55;color:var(--ink-2)}
+.sca-cost .panel{background:var(--navy);color:#fff;padding:clamp(32px,5vw,72px);display:flex;flex-direction:column;gap:56px}
+.sca-cost .row{display:flex;flex-direction:column;gap:20px}
+.sca-cost .row-top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between}
+.sca-cost .row-top .sub{margin:8px 0 0;font-size:1rem;color:var(--soft)}
+.sca-cost .big{margin:0;font-size:clamp(3rem,7vw,6rem);font-weight:600;letter-spacing:-.04em;line-height:.9}
+.sca-cost .big-wrap{text-align:right}
+.sca-cost .fine{margin:10px 0 0;font-size:.875rem;color:var(--soft)}
+.sca-cost .bar{display:flex;height:64px;width:100%}
+.sca-cost .seg{flex:0 0 auto}
+.sca-cost .tail{flex:1 1 auto;min-width:0;border:1px dashed #6E83A8;border-left:none;background:repeating-linear-gradient(135deg,rgba(195,204,219,.22) 0 2px,transparent 2px 11px);display:flex;align-items:center;justify-content:center;padding:0 12px}
+.sca-cost .tail span{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--soft);text-align:center}
+.sca-cost .legend{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.8125rem;color:var(--soft);margin:0;padding:0;list-style:none}
+.sca-cost .legend li{display:flex;gap:8px;align-items:center}
+.sca-cost .sw{width:10px;height:10px;flex:0 0 10px}
+.sca-cost .divider{height:1px;background:#2A4270}
+.sca-cost .gold{color:var(--gold)}
+.sca-cost .includes{margin:0;font-size:1.125rem;line-height:1.5;color:#E6ECF5}
+.sca-cost .small{display:flex;flex-direction:column;gap:6px;font-size:.875rem;line-height:1.6;color:var(--ink-2);max-width:980px}
+.sca-cost .small p{margin:0}
+.sca-cost .small .t{font-weight:600;color:var(--navy)}
+.sca-cost .time{display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-start}
+.sca-cost .time-l{flex:1 1 520px;min-width:0}
+.sca-cost .time-l h3{margin:0;font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;letter-spacing:-.02em;font-weight:600}
+.sca-cost .time-l p{margin:16px 0 0;font-size:1.125rem;line-height:1.6;color:var(--ink-2)}
+.sca-cost .stat{flex:1 1 340px;min-width:0;border-top:2px solid var(--bronze);padding-top:20px}
+.sca-cost .stat .n{margin:0;font-size:clamp(2.5rem,4vw,3.5rem);font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--bronze)}
+.sca-cost .stat p{margin:12px 0 0;font-size:1rem;line-height:1.6;color:var(--ink-2)}
+.sca-cost .sources{border-top:1px solid var(--line);padding-top:24px}
+@media (max-width:760px){.sca-cost{padding:80px 0 120px}}
+@media (max-width:640px){.sca-cost .big-wrap{text-align:left}.sca-cost .bar{height:48px}}
+</style>
+<div class="wrap">
+
+<div class="head">
+<div class="head-l">
+<div class="tag rv" style="margin-bottom:26px"><b>06</b><span>What it costs</span></div>
+<h2 id="sca-cost-title" class="rv d1">The salary is the cheap part. <span class="accent">Getting it wrong is not.</span></h2>
+</div>
+<p class="lede rv d2">Your first recruiter decides every hire after them. Here is what one wrong call costs in year one, using only public Gallup and BLS figures, at the low end every time.</p>
+</div>
+
+<div class="panel rv">
+<div class="row">
+<div class="row-top">
+<div>
+<p class="eyebrow" style="color:var(--soft)">One founding recruiter who does not work out</p>
+<p class="sub">Year one, example inputs</p>
+</div>
+<div class="big-wrap">
+<p class="big">$500,000+</p>
+<p class="fine">Conservative calculation: $512,523</p>
+</div>
+</div>
+<div class="bar" role="img" aria-label="Cost bar: salary $175,000, benefits and payroll tax $75,023, replacing the recruiter $87,500, replacing 2 of their hires $175,000, plus founder and hiring manager time not counted">
+<div class="seg" style="flex-basis:28.68%;background:#E6ECF5"></div>
+<div class="seg" style="flex-basis:12.30%;background:#B3C3DC"></div>
+<div class="seg" style="flex-basis:14.34%;background:#7F98BF"></div>
+<div class="seg" style="flex-basis:28.68%;background:#4F6A96"></div>
+<div class="tail"><span>+ YOUR TIME</span></div>
+</div>
+<ul class="legend">
+<li><span class="sw" style="background:#E6ECF5"></span>Salary $175,000</li>
+<li><span class="sw" style="background:#B3C3DC"></span>Benefits and payroll tax $75,023</li>
+<li><span class="sw" style="background:#7F98BF"></span>Replacing the recruiter $87,500</li>
+<li><span class="sw" style="background:#4F6A96"></span>Replacing 2 of their hires $175,000</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="row">
+<div class="row-top">
+<div>
+<p class="eyebrow gold">SCA People</p>
+<p class="sub">Fixed, for the whole project</p>
+</div>
+<p class="big gold">$250,000</p>
+</div>
+<div class="bar" role="img" aria-label="SCA People fixed fee bar: $250,000">
+<div class="seg" style="flex-basis:40.97%;background:#FFB81C"></div>
+</div>
+<p class="includes">Your agreed role list filled, the function built and documented, and your permanent recruiter or Head of People hired, trained and handed the keys.</p>
+</div>
+</div>
+
+<div class="small">
+<p class="t">How we got to $512,523</p>
+<p>Salary $175,000 (example; use your offer) + benefits and payroll tax $75,023 ($14.07 per $32.82 of wages, recruiter only) (3) + replacing the recruiter $87,500 (0.5 x salary, the floor of Gallup's 0.5x to 2x range) (1) + replacing 2 hires at $175,000 that do not work out $175,000 (0.5 x salary each) (1) = $512,523. Rounded down to $500,000+.</p>
+</div>
+
+<div class="time rv">
+<div class="time-l">
+<h3>And we are not even counting the time.</h3>
+<p>Every hour you and your hiring managers spend screening, interviewing, debriefing and starting over on reopened roles is left out of this number. So are the months each seat sits empty. Add your own estimate and the gap only gets wider.</p>
+</div>
+<div class="stat">
+<p class="n">52%</p>
+<p>of people who quit say their manager or company could have done something to keep them. (2) That is process: how people are hired, onboarded and checked in on. It is what we install.</p>
+</div>
+</div>
+
+<div class="small sources">
+<p class="t">Sources</p>
+<p>(1) Gallup, "This Fixable Problem Costs U.S. Businesses $1 Trillion": the cost of replacing an employee ranges from one-half to two times their annual salary. We use one-half throughout.</p>
+<p>(2) Same Gallup study: 52% of voluntarily exiting employees say their manager or organization could have done something to prevent them from leaving.</p>
+<p>(3) U.S. Bureau of Labor Statistics, Employer Costs for Employee Compensation, June 2026: private-industry employers paid $32.82 an hour in wages and salaries and $14.07 in benefits, including legally required payroll taxes. We apply that ratio to the recruiter's salary only.</p>
+<p>Salary and number of hires are examples. The arithmetic is shown so you can run it with your own numbers.</p>
+</div>
+
+</div>
 </section>
 
 <!-- 07 FIT -->
@@ -941,7 +1028,7 @@ const F = {
 
 // ---------- camera + world keyframes, one (or more) per chapter
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
-function camForStep(i) { const P = path(STEP_U[i]); return { pos: V(P.x + (mobile() ? 0 : 3), 7.5, P.z + 10), tgt: V(P.x + (mobile() ? 0 : 3.5), mobile() ? 0 : 2.6, P.z - 1.5) }; }
+function camForStep(i) { const P = path(STEP_U[i]); return { pos: V(P.x, 7.5, P.z + 10), tgt: V(P.x, mobile() ? 0 : 4.3, P.z - 1.5) }; }
 const KF = {
   hero:    () => ({ pos: V(0, 4.2, 15), tgt: V(1, 3.4, 0), f: 'cluster', bg: DARK, dim: mobile() ? 1 : 0 }),
   about:   () => ({ pos: V(0, 3.6, 17), tgt: V(0, 3.6, 0), f: 'ring', bg: DARK }),
