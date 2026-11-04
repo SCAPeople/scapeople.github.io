@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SCA People | Embedded people infrastructure for funded startups</title>
-  <meta name="description" content="SCA People builds the people function at newly funded startups, does the hiring while building it, then hands it over. Fixed fee. Fixed end date.">
+  <meta name="description" content="SCA People builds the people function at newly funded startups, does the hiring while building it, then hands it over. Fixed fee. Ends at handoff.">
   <meta property="og:title" content="SCA People">
   <meta property="og:description" content="We build your people function, then hand it over.">
   <meta property="og:type" content="website">
@@ -96,6 +96,11 @@
     .nav nav a:hover::after { transform: rotate(90deg); opacity: 1; }
     .nav .aboutlink { padding: 10px 18px; font-size: 14.5px; border: 1px solid rgba(255,255,255,.45); text-decoration: none; transition: border-color .2s, color .2s, background .2s; }
     .nav .aboutlink:hover { border-color: var(--gold); color: var(--gold); }
+    .menubtn { display: none; width: 44px; height: 42px; padding: 0 11px; flex-direction: column; justify-content: center; gap: 5px; background: transparent; border: 1px solid rgba(255,255,255,.45); cursor: pointer; }
+    .menubtn span { display: block; height: 1.5px; background: var(--white); transition: transform .3s var(--ease), opacity .2s; }
+    .nav.open .menubtn span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav.open .menubtn span:nth-child(2) { opacity: 0; }
+    .nav.open .menubtn span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
     body.on-light .nav { color: var(--navy); }
     body.on-light .nav nav a { color: var(--slate); }
     body.on-light .nav nav a:hover { color: var(--navy); }
@@ -112,6 +117,9 @@
     .chapter span { transition: opacity .25s; }
     .chapter { transition: opacity .4s; }
     .chapter.hide { opacity: 0; }
+    /* keep the badge clear of the content column: number only on laptops, hidden when there is no gutter */
+    @media (max-width: 1619px) { .chapter { left: 14px; } .chapter .lbl { display: none; } }
+    @media (max-width: 1299px) { .chapter { display: none; } }
     .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--gold); width: 0; z-index: 60; }
 
     /* ---------- 00 hero */
@@ -135,6 +143,8 @@
     .stats small { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
     .stats strong { display: block; margin-top: 8px; font-size: clamp(22px, 2.3vw, 32px); font-weight: 500; letter-spacing: -0.02em; }
     .scrollcue { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .scrollcue { left: auto; right: max(24px, calc((100vw - 1240px) / 2 - 50px)); transform: none; }
+    @media (max-width: 1399px) { .scrollcue { display: none; } }
     .scrollcue i { width: 1px; height: 34px; background: linear-gradient(var(--gold), transparent); animation: cue 2s ease-in-out infinite; transform-origin: top; }
     @keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
 
@@ -316,6 +326,10 @@
       .glass6, .alts-grid, .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav nav { display: none; }
       .nav .aboutlink { margin-left: auto; }
+      .menubtn { display: inline-flex; margin-left: -24px; }
+      .nav.open { background: #020F24; border-color: rgba(255,255,255,.08); }
+      .nav.open nav { display: flex; position: absolute; top: 76px; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0; padding: 4px 24px 18px; background: #020F24; border-bottom: 1px solid rgba(255,255,255,.08); }
+      .nav.open nav a { padding: 15px 0; font-size: 17px; border-bottom: 1px solid rgba(255,255,255,.08); }
       .problem .split { gap: 32px; }
       .problem .frame { align-items: flex-start; padding-top: 100px; }
       .seq .photo { height: 140px; }
@@ -348,6 +362,7 @@
       .build, .who, .trust { padding-block: 110px; }
       .alts { padding-block: 120px 80px; } .price { padding-block: 80px 120px; }
       .chapter { display: none; }
+      .who .photo { display: none; }
       .logo { font-size: 16px; }
       .seq .photo { display: none; }
       .seq .body { padding: 22px 22px 20px; }
@@ -385,7 +400,7 @@
 <header class="nav" id="nav">
   <div class="wrap">
     <a href="#top" class="logo"><i></i>SCA People</a>
-    <nav aria-label="Primary">
+    <nav aria-label="Primary" id="primaryNav">
       <a href="#problem">The problem</a>
       <a href="#build">What we build</a>
       <a href="#process">How it runs</a>
@@ -393,6 +408,7 @@
       <a href="#contact">Contact</a>
     </nav>
     <a class="aboutlink" href="about.html">About us</a>
+    <button class="menubtn" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -418,7 +434,7 @@
             <a class="btn btn-gold" href="#process">See how it runs <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1v13M3 9l5 5 5-5"/></svg></a>
             <a class="textlink" href="#contact">Start a conversation</a>
           </div>
-          <div class="fine rv d4">Fixed fee. Fixed end date. Nothing to renew.</div>
+          <div class="fine rv d4">Fixed fee. Ends at handoff. Nothing to renew.</div>
         </div>
       </div>
       <div class="stats rv d4">
@@ -455,10 +471,10 @@
       <div class="seq panel" id="seq">
         <div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&h=440&q=72" alt="A startup team working at laptops"><div class="cap">Post-raise, pre-structure</div></div>
         <div class="body">
-          <article><div class="n">/01 OF 04</div><h3>The pressure is real</h3><p>Funding closes and the plan calls for two to four times the team inside a year. The hiring happens whether anyone is ready or not.</p></article>
+          <article><div class="n">/01 OF 04</div><h3>The pressure is real</h3><p>Funding closes and the plan calls for a much bigger team, fast. The hiring happens whether anyone is ready or not.</p></article>
           <article><div class="n">/02 OF 04</div><h3>The job looks covered</h3><p>A founder picked it up. Or a Chief of Staff is running a management consulting playbook that was never built for a company at this stage.</p></article>
           <article><div class="n">/03 OF 04</div><h3>So it gets built wrong</h3><p>Job titles invented one offer at a time. Pay set by whoever negotiated hardest. The bad hires surface later.</p></article>
-          <article><div class="n">/04 OF 04</div><h3>The fix is hard to judge</h3><p>The answer is a Head of People (or People/Talent hire). But you have never done that job, so you cannot tell a strong one from a confident one.</p></article>
+          <article><div class="n">/04 OF 04</div><h3>The fix is hard to judge</h3><p>The answer is your first People/Talent hire. But you have never done that job, so you cannot tell a strong one from a confident one.</p></article>
         </div>
         <div class="segs"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
       </div>
@@ -500,7 +516,7 @@
     <div class="top wrap">
       <div class="tag"><b>04</b><span>How it runs</span></div>
       <h2 class="h-lg">The whole function, not a slate of hires.</h2>
-      <p class="lede">An agency sends resumes and moves on. We leave behind the machine that finds, levels, pays, onboards and keeps people, and the person trained to run all of it.</p>
+      <p class="lede">An agency sends resumes and moves on. Here is what we do instead.</p>
     </div>
     <div class="marker" data-m="0"><b>01</b><span>We build</span></div>
     <div class="marker" data-m="1"><b>02</b><span>We hire</span></div>
@@ -516,8 +532,8 @@
       <div class="pills"><span>01</span><span>02</span><span>03</span><span>04</span></div>
       <div class="body">
         <article><h3>We build.</h3><p>Pay bands, levels, scorecards, your systems configured, your story to candidates, and the handbook underneath it.</p></article>
-        <article><h3>We hire, at volume.</h3><p>Every open role, filled by the same operators building the machine that fills them.</p></article>
-        <article><h3>We find your Head of People (or People/Talent hire).</h3><p>We run the search, present finalists, you make the call. They inherit a function already running.</p></article>
+        <article><h3>We hire, at volume.</h3><p>Your open roles get filled while we build, not after.</p></article>
+        <article><h3>We find your first People/Talent hire.</h3><p>We run the search, present finalists, you make the call. They inherit a function already running.</p></article>
         <article><h3>We hand over and leave.</h3><p>You keep the playbook, the systems, the data and the person trained to run them.</p></article>
       </div>
     </div>
@@ -551,7 +567,9 @@
 .sca-cost .head-l .eyebrow{color:var(--ink-2);margin-bottom:24px}
 .sca-cost h2{margin:0;font-size:clamp(2.75rem,6vw,5.5rem);line-height:.98;letter-spacing:-.035em;font-weight:600}
 .sca-cost h2 .accent{display:block;margin-top:10px;color:var(--bronze)}
-.sca-cost .lede{flex:1 1 360px;min-width:0;margin:0;font-size:1.25rem;line-height:1.55;color:var(--ink-2)}
+.sca-cost .lede{flex:1 1 400px;min-width:0;margin:0;font-size:1.25rem;line-height:1.55;color:var(--ink-2)}
+.sca-cost .lede p{margin:0}
+.sca-cost .lede .hook{margin-bottom:16px;font-size:clamp(1.75rem,2.6vw,2.35rem);line-height:1.2;letter-spacing:-.02em;font-weight:500;color:#fff}
 .sca-cost .panel{background:rgba(4,30,66,.82);border:1px solid rgba(255,255,255,.14);color:#fff;padding:clamp(32px,5vw,72px);display:flex;flex-direction:column;gap:56px}
 .sca-cost .row{display:flex;flex-direction:column;gap:20px}
 .sca-cost .row-top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between}
@@ -590,7 +608,7 @@
 <div class="tag rv" style="margin-bottom:26px"><b>06</b><span>What it costs</span></div>
 <h2 id="sca-cost-title" class="rv d1">The salary is the cheap part. <span class="accent">Getting it wrong is not.</span></h2>
 </div>
-<p class="lede rv d2">Your first recruiter decides every hire after them. Here is what one wrong call costs in year one, using only public Gallup and BLS figures, at the low end every time.</p>
+<div class="lede rv d2"><p class="hook">Your first recruiter decides every hire after them.</p><p>Here is what one wrong call costs in year one, using only public Gallup and BLS figures, at the low end every time.</p></div>
 </div>
 
 <div class="panel rv">
@@ -633,13 +651,13 @@
 <div class="bar" role="img" aria-label="SCA People fixed fee bar: $250,000">
 <div class="seg" style="flex-basis:40.97%;background:#FFB81C"></div>
 </div>
-<p class="includes">Your agreed role list filled, the function built and documented, and your permanent recruiter or Head of People hired, trained and handed the keys.</p>
+<p class="includes">Your agreed role list filled, the function built and documented, and your first People/Talent hire found, trained and handed the keys.</p>
 </div>
 </div>
 
 <div class="small">
 <p class="t">How we got to $512,523</p>
-<p>Salary $175,000 (example; use your offer) + benefits and payroll tax $75,023 ($14.07 per $32.82 of wages, recruiter only) (3) + replacing the recruiter $87,500 (0.5 x salary, the floor of Gallup's 0.5x to 2x range) (1) + replacing 2 hires at $175,000 that do not work out $175,000 (0.5 x salary each) (1) = $512,523. Rounded down to $500,000+.</p>
+<p>Salary $175,000 (example; use your offer) + benefits and payroll tax $75,023 ($14.07 per $32.82 of wages, recruiter only) (3) + replacing the recruiter $87,500 (0.5 x salary, the floor of Gallup's 0.5x to 2x range) (1) + replacing 2 hires that do not work out: 2 &times; ($175,000 &times; 0.5) = $175,000 (1). Total $512,523. Rounded down to $500,000+.</p>
 </div>
 
 <div class="time rv">
@@ -684,7 +702,7 @@
         <button aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>You're using a benchmarking subscription and applying the generic bands as-is, with no levels underneath them and nobody who can tell you which numbers actually clear</button>
         <button aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>The people you actually wanted are taking counter-offers, or going quiet halfway through your interview process</button>
         <button aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>A founder or Chief of Staff is doing this on top of their real job</button>
-        <button aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>You know you need a Head of People (or People/Talent hire) and do not know how to evaluate one</button>
+        <button aria-pressed="false"><span class="box"><svg viewBox="0 0 14 14"><path d="M2 7.5l3 3 7-7"/></svg></span>You know you need your first People/Talent hire and do not know how to evaluate one</button>
       </div>
       <div class="verdict" id="verdict">
         <p id="verdictText">Tick the ones that sound like you.</p>
@@ -783,6 +801,11 @@
   var procSec = document.getElementById('process'), stepArts = document.querySelectorAll('#stepcard article'), stepImgs = document.querySelectorAll('#stepcard .photo img'), pills = document.querySelectorAll('#stepcard .pills span');
   var nav = document.getElementById('nav'), bar = document.getElementById('progress');
   var chNum = document.getElementById('chNum'), chName = document.getElementById('chName');
+  // phone menu
+  var menuBtn = nav.querySelector('.menubtn');
+  function setMenu(open) { nav.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); }
+  menuBtn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+  nav.querySelectorAll('nav a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
   var chapters = Array.prototype.slice.call(document.querySelectorAll('[data-ch]'));
   var curCh = '00';
 
@@ -817,7 +840,8 @@
     var mid = vh() / 2, active = chapters[0];
     chapters.forEach(function (c) { var r = c.getBoundingClientRect(); if (r.top <= mid) active = c; });
     document.body.classList.toggle('on-light', active.hasAttribute('data-light'));
-    document.querySelector('.chapter').classList.toggle('hide', active.dataset.ch === '00');
+    var footTop = document.querySelector('footer').getBoundingClientRect().top;
+    document.querySelector('.chapter').classList.toggle('hide', active.dataset.ch === '00' || footTop < vh() - 20);
     if (active.dataset.ch !== curCh) {
       curCh = active.dataset.ch;
       chNum.style.opacity = chName.style.opacity = 0;
