@@ -929,9 +929,12 @@ const ICONS = {
   share: 'M6 10a2 2 0 1 0 .01 0M18 4a2 2 0 1 0 .01 0M18 16a2 2 0 1 0 .01 0M8 11l8-4M8 13l8 4',
   layers: 'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5',
   clock: 'M12 4a8 8 0 1 0 .01 0M12 8v4l3 2',
-  key: 'M8 10.5a4 4 0 1 0 .01 0M11 13l9-9M17 7l3 3M14.5 9.5l2 2'
+  key: 'M8 10.5a4 4 0 1 0 .01 0M11 13l9-9M17 7l3 3M14.5 9.5l2 2',
+  question: 'M8.6 8.4a3.5 3.5 0 1 1 4.9 3.2c-.9.4-1.5 1.2-1.5 2.2V15M12 19.2v.01',
+  vault: 'M4 4h16v15H4zM12 8a3.5 3.5 0 1 0 .01 0M12 8v1.4M12 13.6V15M8.5 11.5h1.4M14.1 11.5h1.4M6.5 19v2M17.5 19v2M17 7.5v1M17 14.5v1',
+  bank: 'M3 9l9-5 9 5zM5.5 10.5v6.5M10 10.5v6.5M14 10.5v6.5M18.5 10.5v6.5M3 20h18'
 };
-const iconKeys = Object.keys(ICONS);
+const iconKeys = Object.keys(ICONS).slice(0, 15);
 const texCache = {};
 function iconTex(name, dark) {
   const id = name + (dark ? 'd' : 'l'); if (texCache[id]) return texCache[id];
@@ -958,8 +961,27 @@ for (let j = 0; j < N; j++) {
   const m = new THREE.Mesh(boxGeo, gold ? goldMatT : blueMatT);
   const face = new THREE.Mesh(faceGeo, new THREE.MeshBasicMaterial({ map: iconTex(j === 0 ? 'key' : iconKeys[(j * 5) % iconKeys.length], gold), transparent: true, depthWrite: false, toneMapped: false }));
   face.position.z = 0.152; m.add(face); faceMats.push(face.material);
-  const t = { m, gold, s: [rnd(), rnd(), rnd(), rnd(), rnd(), rnd()], p: new THREE.Vector3(0, 2, -20), q: new THREE.Quaternion(), sc: 0.001 };
+  const t = { m, gold, face, icon: null, pop: 1, s: [rnd(), rnd(), rnd(), rnd(), rnd(), rnd()], p: new THREE.Vector3(0, 2, -20), q: new THREE.Quaternion(), sc: 0.001 };
   m.position.copy(t.p); scene.add(m); tiles.push(t);
+}
+
+// icon sets by chapter: question marks early, locks and vaults for trust, checkmarks at the end
+const LOCK_BODY = () => mobile() ? 12 : 16;
+function iconFor(j, mode) {
+  const base = j === 0 ? 'key' : iconKeys[(j * 5) % iconKeys.length];
+  if (mode === 'q') return j === 0 ? 'key' : (j % 5 < 3 ? 'question' : base);
+  if (mode === 'lock') return j < LOCK_BODY() ? ['lock', 'shield', 'vault', 'key', 'bank'][j % 5] : (j % 2 ? 'lock' : 'shield');
+  if (mode === 'check') return 'check';
+  return base;
+}
+let iconMode = null;
+function setIcons(mode) {
+  if (mode === iconMode) return; iconMode = mode;
+  tiles.forEach((tl, j) => {
+    const name = iconFor(j, mode); if (name === tl.icon) return;
+    const first = tl.icon === null; tl.icon = name;
+    tl.face.material.map = iconTex(name, tl.gold); if (!first) tl.pop = 0;
+  });
 }
 
 // ---------- formations: where each tile wants to be, per chapter
@@ -1010,13 +1032,18 @@ const F = {
     return [(a - .5) * 46, 1 + b * 14, -30 + c * 12, d * 6 + t * .1, e * 6 + t * .08, 0, 0.9 + c * .6];
   },
   vault(j, t) {
-    const mb = mobile(), cx = mb ? 0 : 11.5, cy = mb ? 9 : 4, cz = mb ? -14 : -3, sw = Math.sin(t * .5) * .22 - (mb ? 0 : .35);
-    if (j < 16) {
-      const a = (j % 4) - 1.5, b = Math.floor(j / 4) - 1.5, s = 1.04;
-      return [cx + a * s * Math.cos(sw), cy + b * s, cz - a * s * Math.sin(sw), 0, sw, 0, 1];
-    }
-    const k = j - 16, n = N - 16, an = k / n * TAU + t * .45, R = 3.9;
-    return [cx + Math.cos(an) * R, cy + Math.sin(an) * R, cz + 0.8, 0, 0, an, 0.5];
+    // a padlock: a body of full tiles with a shackle of smaller tiles arching over it
+    const mb = mobile(), cx = mb ? 0 : 8.9, cy = mb ? 8.4 : 3.2, cz = mb ? -14 : -3, sw = Math.sin(t * .5) * .22 - (mb ? 0 : .35);
+    const s = 1.04, cols = 4, nb = LOCK_BODY(), rows = nb / cols, put = (x, y, rz, sc) => [cx + x * Math.cos(sw), cy + y, cz - x * Math.sin(sw), 0, sw, rz, sc];
+    if (j < nb) return put(((j % cols) - (cols - 1) / 2) * s, (Math.floor(j / cols) - (rows - 1) / 2) * s, 0, 1);
+    // shackle: up one leg, over the arc, down the other
+    const k = j - nb, n = N - nb, R = mb ? 1.05 : 1.3, leg = mb ? 0.75 : 0.7, base = rows / 2 * s + 0.05;
+    const L = 2 * leg + Math.PI * R, d = (k + 0.5) / n * L;
+    let x, y, rz = 0;
+    if (d < leg) { x = -R; y = base + d; }
+    else if (d < leg + Math.PI * R) { const an = Math.PI - (d - leg) / R; x = Math.cos(an) * R; y = base + leg + Math.sin(an) * R; rz = an - Math.PI / 2; }
+    else { x = R; y = base + leg - (d - leg - Math.PI * R); }
+    return put(x, y, rz, 0.5);
   },
   handoff(j, t) {
     const mb = mobile();
@@ -1030,16 +1057,16 @@ const F = {
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 function camForStep(i) { const P = path(STEP_U[i]); return { pos: V(P.x, 7.5, P.z + 10), tgt: V(P.x, mobile() ? 0 : 4.3, P.z - 1.5) }; }
 const KF = {
-  hero:    () => ({ pos: V(0, 4.2, 15), tgt: V(1, 3.4, 0), f: 'cluster', bg: DARK, dim: mobile() ? 1 : 0 }),
-  about:   () => ({ pos: V(0, 3.6, 17), tgt: V(0, 3.6, 0), f: 'ring', bg: DARK }),
-  problem: () => ({ pos: V(-3, 6, 16), tgt: V(1, 2.6, -2), f: 'chaos', bg: DARK, dim: mobile() ? 0.8 : 0 }),
+  hero:    () => ({ pos: V(0, 4.2, 15), tgt: V(1, 3.4, 0), f: 'cluster', ic: 'q', bg: DARK, dim: mobile() ? 1 : 0 }),
+  about:   () => ({ pos: V(0, 3.6, 17), tgt: V(0, 3.6, 0), f: 'ring', ic: 'q', bg: DARK }),
+  problem: () => ({ pos: V(-3, 6, 16), tgt: V(1, 2.6, -2), f: 'chaos', ic: 'q', bg: DARK, dim: mobile() ? 0.8 : 0 }),
   build:   () => ({ pos: V(0, 15, 9), tgt: V(0, 0, -1.5), f: 'grid', bg: NAVY, dim: mobile() ? 0.8 : 0.3 }),
   process: i => ({ ...camForStep(i), f: 'path', o: { step: i }, bg: DARK }),
   compare: () => ({ pos: V(0, 4, 17), tgt: V(0, 3.6, 0), f: 'halves', bg: DARK, dim: mobile() ? 0.85 : 0.75 }),
   price:   () => ({ pos: V(0, 5, 16), tgt: V(0, 3.5, 0), f: 'rows', bg: DARK, dim: 0.92 }),
   fit:     () => ({ pos: V(2, 4, 16), tgt: V(-1, 3.2, 0), f: 'drift', bg: DARK, dim: mobile() ? 0.85 : 0.6 }),
-  trust:   () => ({ pos: V(0, 4, 15), tgt: V(1, 3.6, 0), f: 'vault', bg: DARK, dim: mobile() ? 0.6 : 0 }),
-  contact: () => ({ pos: V(0, 3.6, 13), tgt: V(1.5, 3.6, 0), f: 'handoff', bg: DARK })
+  trust:   () => ({ pos: V(0, 4, 15), tgt: V(1, 3.6, 0), f: 'vault', ic: 'lock', bg: DARK, dim: mobile() ? 0.6 : 0 }),
+  contact: () => ({ pos: V(0, 3.6, 13), tgt: V(1.5, 3.6, 0), f: 'handoff', ic: 'check', bg: DARK })
 };
 
 // anchors: scroll positions at which each keyframe is fully reached
@@ -1093,6 +1120,7 @@ function frame() {
   const A = anchors[i], B = anchors[Math.min(i + 1, anchors.length - 1)];
   const f = B === A ? 0 : smooth(Math.min(1, Math.max(0, (y - A.y) / (B.y - A.y))));
   const ease = first || reduce ? 1 : 1 - Math.exp(-dt * 3.2);
+  setIcons((f < 0.5 ? A.k.ic : B.k.ic) || 'base');
 
   // camera
   tmpA.copy(A.k.pos).lerp(B.k.pos, f); tmpB.copy(A.k.tgt).lerp(B.k.tgt, f);
@@ -1121,6 +1149,7 @@ function frame() {
     const sc = a[6] + (b[6] - a[6]) * f;
     tl.p.lerp(tmpA, ease); tl.q.slerp(qA, ease); tl.sc += (sc - tl.sc) * ease;
     tl.m.position.copy(tl.p); tl.m.quaternion.copy(tl.q); tl.m.scale.setScalar(Math.max(0.001, tl.sc));
+    if (tl.pop < 1) { tl.pop = Math.min(1, tl.pop + dt * 3.5); const e = 1 - Math.pow(1 - tl.pop, 3); tl.face.scale.setScalar(e); }
   });
 
   // process milestone labels follow the path in 3D
